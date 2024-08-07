@@ -1,0 +1,11 @@
+{
+  "name": "parcel-react-name",
+  "main": "index.js",
+  "scripts": {
+    "test-p-r": "echo \"hi parcel react\" && exit 1",
+    "start-p-r": "node parcel-react.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1"
+  }
+}

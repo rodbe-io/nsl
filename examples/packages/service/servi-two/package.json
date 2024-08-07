@@ -1,0 +1,11 @@
+{
+  "name": "service-two-name",
+  "main": "index.js",
+  "scripts": {
+    "test-s-2": "echo \"hi service two\"",
+    "start-s-2": "node service-two.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1"
+  }
+}

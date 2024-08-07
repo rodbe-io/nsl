@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2020"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "declaration": true,
+    "verbatimModuleSyntax": true,
+    "noUncheckedIndexedAccess": true,
+
+    /* Bundler mode */
+		// Allow JS files to be imported from TS and vice versa
+		"allowJs": true,
+		// Use correct ESM import behavior
+		"esModuleInterop": true,
+    "outDir": "dist",
+    "noEmit": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+
+    /* Linting */
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/models/*": ["./src/models/*"],
+      "@/utils/*": ["./src/utils/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

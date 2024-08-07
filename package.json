@@ -1,0 +1,60 @@
+{
+  "author": "KevinRodbe",
+  "name": "@rodbe/nsl",
+  "version": "0.0.1",
+  "license": "MIT",
+  "engineStrict": true,
+  "homepage": "https://github.com/kevinrodbe/nsl",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinrodbe/nsl.git"
+  },
+  "packageManager": "pnpm@9.5.0",
+  "engines": {
+    "node": ">= 18.18.2",
+    "npm": ">= 6.14.18",
+    "pnpm": ">= 9.5.0"
+  },
+  "main": "./dist/index.js",
+  "exports": "./dist/index.js",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "nsl": "./dist/index.js"
+  },
+  "scripts": {
+    "start": "tsc",
+    "dev": "pkgroll --watch",
+    "build": "pkgroll",
+    "type-check": "tsc --noEmit",
+    "pepe": "echo \"hi root\""
+  },
+  "dependencies": {
+    "@inquirer/prompts": "5.3.2",
+    "@inquirer/search": "1.0.2",
+    "chalk": "^5.3.0",
+    "figlet": "^1.7.0",
+    "text-table": "0.2.0",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.5.8",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^22.0.0",
+    "@types/text-table": "^0.2.5",
+    "@types/yargs": "^17.0.32",
+    "pkgroll": "^2.4.1",
+    "prettier": "^3.3.3",
+    "typescript": "^5.2.2"
+  },
+  "volta": {
+    "node": "18.18.2"
+  },
+  "imports": {
+    "@/*": "./src/*",
+    "@/models/*": "./src/models/*",
+    "@/utils/*": "./src/utils/*"
+  }
+}

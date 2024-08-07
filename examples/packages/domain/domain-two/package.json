@@ -1,0 +1,15 @@
+{
+  "name": "domain-two-name",
+  "main": "index.js",
+  "scripts": {
+    "test-d-2": "echo \"hi domain two\"",
+    "start-d-2": "node domain-two.js",
+    "node-2": "node -v"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1"
+  },
+  "volta": {
+    "node": "10.24.1"
+  }
+}
