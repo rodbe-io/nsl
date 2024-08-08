@@ -1,0 +1,55 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
+
+      - name: Get Node and PNPM version
+        id: get-node-npm-versions
+        run: |
+            echo "NODE_VERSION=$(cat package.json | jq -r '.volta.node')" >> $GITHUB_OUTPUT
+            echo "PNPM_VERSION=$(cat package.json | jq -r '.packageManager' | awk -F'@' '{print $2}')" >> $GITHUB_OUTPUT
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+            version: ${{ steps.get-node-npm-versions.outputs.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+            node-version: ${{ steps.get-node-npm-versions.outputs.NODE_VERSION }}
+            cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm i --prefer-offline
+
+      - name: Build
+        run: npm run build
+
+      - name: Audit
+        run: npm audit signatures
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm run bump

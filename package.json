@@ -25,11 +25,11 @@
     "nsl": "./dist/index.js"
   },
   "scripts": {
-    "start": "tsc",
-    "dev": "pkgroll --watch",
     "build": "pkgroll",
-    "type-check": "tsc --noEmit",
-    "pepe": "echo \"hi root\""
+    "bump": "semantic-release",
+    "hi": "echo \"hi root\"",
+    "start": "pkgroll --watch",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@inquirer/prompts": "5.3.2",
@@ -40,6 +40,8 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/git": "10.0.1",
     "@types/figlet": "^1.5.8",
     "@types/inquirer": "^9.0.7",
     "@types/node": "^22.0.0",
@@ -47,6 +49,7 @@
     "@types/yargs": "^17.0.32",
     "pkgroll": "^2.4.1",
     "prettier": "^3.3.3",
+    "semantic-release": "^19.0.2",
     "typescript": "^5.2.2"
   },
   "volta": {
@@ -56,5 +59,8 @@
     "@/*": "./src/*",
     "@/models/*": "./src/models/*",
     "@/utils/*": "./src/utils/*"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
