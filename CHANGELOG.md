@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/kevinrodbe/nsl/compare/v1.0.0...v1.1.0) (2024-08-13)
+
+
+### Features
+
+* add cache support ([b715041](https://github.com/kevinrodbe/nsl/commit/b715041f96a1d87581295406b22c54a04639e9bd))
+
 ## 1.0.0 (2024-08-08)
 
 
