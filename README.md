@@ -1,5 +1,7 @@
 # NSL ⚡️
-List, fuzzy search and run scripts from a monorepo
+List, fuzzy search and run scripts from any type of project
+
+> Easy and fast way to run npm scripts  🚀
 
 ## Usage 🏎️
 
