@@ -1,6 +1,7 @@
 import table from 'text-table';
-import { Separator } from '@inquirer/prompts';
+import { Separator } from '@inquirer/search';
 import chalk from 'chalk';
+
 import type { Script, ScriptTable } from '@/models/script.types';
 
 type GroupedScript = {

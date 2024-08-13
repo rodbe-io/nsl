@@ -4,6 +4,15 @@ import { join } from 'node:path';
 import type { Script } from '@/models/script.types';
 import { FOLDERS_TO_IGNORE } from '@/constants';
 
+export const readFile = (filePath: string) => {
+  try {
+    const file = readFileSync(filePath, 'utf8');
+    return JSON.parse(file.toString());
+  } catch (e) {
+    return [];
+  }
+};
+
 type FindPackageJsonFilesProps = {
   absolutePath: string;
   fileListAccumulator?: string[];

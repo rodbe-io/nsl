@@ -28,7 +28,9 @@
     "strict": true,
     "paths": {
       "@/*": ["./src/*"],
+      "@/adapters/*": ["./src/adapters/*"],
       "@/models/*": ["./src/models/*"],
+      "@/tasks/*": ["./src/tasks/*"],
       "@/utils/*": ["./src/utils/*"]
     }
   },
