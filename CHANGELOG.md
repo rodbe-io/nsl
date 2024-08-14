@@ -1,3 +1,10 @@
+## [1.4.0](https://github.com/kevinrodbe/nsl/compare/v1.3.0...v1.4.0) (2024-08-14)
+
+
+### Features
+
+* remove env-paths dependency ([a5c86f8](https://github.com/kevinrodbe/nsl/commit/a5c86f892219ecbe4e80a18fcafad9675359974a))
+
 ## [1.3.0](https://github.com/kevinrodbe/nsl/compare/v1.2.0...v1.3.0) (2024-08-14)
 
 
