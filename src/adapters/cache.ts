@@ -18,7 +18,7 @@ export const cacheFactory = <Value extends {}, FC>(opts: CacheFactoryParams<stri
   const purged = cache.purgeStale();
 
   const dumpCache = () => {
-    // writeFileSync(cacheFilePath, JSON.stringify(cache.dump(), null, 2));
+    writeFileSync(cacheFilePath, JSON.stringify(cache.dump(), null, 2));
   };
 
   if (purged) {
