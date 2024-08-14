@@ -1,3 +1,10 @@
+## [1.6.0](https://github.com/kevinrodbe/nsl/compare/v1.5.0...v1.6.0) (2024-08-14)
+
+
+### Features
+
+* set ttl for a month ([a7fc2d9](https://github.com/kevinrodbe/nsl/commit/a7fc2d9ed848a103e10cf53de410b3fe962414bd))
+
 ## [1.5.0](https://github.com/kevinrodbe/nsl/compare/v1.4.0...v1.5.0) (2024-08-14)
 
 
