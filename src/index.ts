@@ -18,7 +18,7 @@ import {
 import { cacheFactory } from './adapters/cache';
 import { QUATER_IN_MS, RERUN_CACHE_NAME } from './constants';
 import type { Script } from './models/script.types';
-import { checkAvailableUpdate } from './tasks/check-update';
+// import { checkAvailableUpdate } from './tasks/check-update';
 import { debugIt } from './tasks/debug';
 
 const runner = 'npm';
@@ -37,8 +37,7 @@ const init = async () => {
     debug: { type: 'boolean', default: false },
     s: { type: 'boolean', default: false },
   }).argv;
-
-  await checkAvailableUpdate();
+  // await checkAvailableUpdate();
 
   const { getCache, setCache } = cacheFactory<Script['value'], any>({
     max: 3,
