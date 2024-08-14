@@ -18,8 +18,8 @@ import {
 import { cacheFactory } from './adapters/cache';
 import { QUATER_IN_MS, RERUN_CACHE_NAME } from './constants';
 import type { Script } from './models/script.types';
-import { checkAvailableUpdate } from './tasks/check-update';
-import { debugIt } from './tasks/debug';
+// import { checkAvailableUpdate } from './tasks/check-update';
+// import { debugIt } from './tasks/debug';
 
 const runner = 'npm';
 
@@ -38,16 +38,16 @@ const init = async () => {
     s: { type: 'boolean', default: false },
   }).argv;
 
-  await checkAvailableUpdate();
+  // await checkAvailableUpdate();
 
-  const { getCache, setCache } = cacheFactory<Script['value'], any>({
-    max: 3,
-    ttl: QUATER_IN_MS,
-    cacheName: RERUN_CACHE_NAME,
-  });
+  // const { getCache, setCache } = cacheFactory<Script['value'], any>({
+  //   max: 3,
+  //   ttl: QUATER_IN_MS,
+  //   cacheName: RERUN_CACHE_NAME,
+  // });
 
   if (argv.debug) {
-    debugIt(argv);
+    // debugIt(argv);
     process.exit(0);
   }
 
@@ -56,7 +56,7 @@ const init = async () => {
   const groupedScriptsWithTable = groupedScriptsWithTableProp(groupedScripts);
   const groupedScriptsWithInquirerFormat = getGroupedScriptsWithInquirerFormat(groupedScriptsWithTable);
 
-  const selectedScript = getCache(cwd);
+  // const selectedScript = getCache(cwd);
 
   const prompResult = async (cliArgs: typeof argv) => {
     // TODO: investigate how to set the default value. The api does not support objects
@@ -64,7 +64,7 @@ const init = async () => {
       return await select({
         message: 'Select a script to run:',
         pageSize: 20,
-        default: selectedScript,
+        // default: selectedScript,
         choices: getGroupedScriptsWithInquirerFormat(groupedScriptsWithTable),
       });
     }
@@ -93,7 +93,7 @@ const init = async () => {
   };
 
   const answer = await prompResult(argv);
-  setCache(cwd, answer);
+  // setCache(cwd, answer);
 
   const commandToRun = `${runner} run ${answer.scriptName}`;
   const scriptPath = answer.folderContainer === 'Root' ? cwd : join(cwd, answer.folderContainer);
