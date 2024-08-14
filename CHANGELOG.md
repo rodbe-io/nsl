@@ -1,3 +1,10 @@
+## [1.3.0](https://github.com/kevinrodbe/nsl/compare/v1.2.0...v1.3.0) (2024-08-14)
+
+
+### Features
+
+* change cache folder ([66934c3](https://github.com/kevinrodbe/nsl/commit/66934c3ca5c2471daf867a6cf92be39df6e3e916))
+
 ## [1.2.0](https://github.com/kevinrodbe/nsl/compare/v1.1.4...v1.2.0) (2024-08-14)
 
 
