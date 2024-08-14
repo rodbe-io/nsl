@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/kevinrodbe/nsl/compare/v1.1.4...v1.2.0) (2024-08-14)
+
+
+### Features
+
+* add os pkg ([b321d1b](https://github.com/kevinrodbe/nsl/commit/b321d1b368b904e1869d421d767afc75b343571b))
+
 ## [1.1.4](https://github.com/kevinrodbe/nsl/compare/v1.1.3...v1.1.4) (2024-08-14)
 
 
