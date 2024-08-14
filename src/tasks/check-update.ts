@@ -6,7 +6,7 @@ import { execSync } from 'node:child_process';
 
 import currentPkgJson from '../../package.json';
 import { cacheFactory } from '@/adapters/cache';
-import { SHORT_CONFIG_CACHE_NAME, DAY_IN_MS, LONG_CONFIG_CACHE_NAME, WEEK_IN_MS, STATUS } from '@/constants';
+import { SHORT_CONFIG_CACHE_NAME, MONTH_IN_MS, LONG_CONFIG_CACHE_NAME, STATUS } from '@/constants';
 
 const updateOptions = {
   message: 'Heey! Before, do you want to get the latest version? 🔥',
@@ -27,12 +27,14 @@ export const checkAvailableUpdate = async () => {
   const cwd = process.cwd();
   const shortConfigCache = cacheFactory<string, any>({
     max: 10,
-    ttl: DAY_IN_MS,
+    // NOTE: while we are in beta stage
+    ttl: MONTH_IN_MS, // DAY_IN_MS,
     cacheName: SHORT_CONFIG_CACHE_NAME,
   });
   const longConfigCache = cacheFactory<string, any>({
     max: 10,
-    ttl: WEEK_IN_MS,
+    // NOTE: while we are in beta stage
+    ttl: MONTH_IN_MS, // WEEK_IN_MS,
     cacheName: LONG_CONFIG_CACHE_NAME,
   });
 
