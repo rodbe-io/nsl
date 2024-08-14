@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/kevinrodbe/nsl/compare/v1.1.0...v1.1.1) (2024-08-14)
+
+
+### Bug Fixes
+
+* debug for windows permission ([a75ae3e](https://github.com/kevinrodbe/nsl/commit/a75ae3e3471c35e8299a9f7235c55c0e217668e8))
+
 ## [1.1.0](https://github.com/kevinrodbe/nsl/compare/v1.0.0...v1.1.0) (2024-08-13)
 
 
