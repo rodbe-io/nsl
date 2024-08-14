@@ -18,6 +18,7 @@ nsl
 npm i -g @rodbe/nsl
 ```
 
+> if you have a permission error, try to install with **administrator privileges**
 ## License
 
 MIT

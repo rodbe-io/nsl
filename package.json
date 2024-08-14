@@ -70,5 +70,23 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "cli-app",
+    "cli",
+    "fuzzy-search",
+    "inquirer",
+    "interactive",
+    "list",
+    "menu",
+    "npm",
+    "ntl",
+    "productivity",
+    "runner",
+    "scripts",
+    "task",
+    "terminal",
+    "unix",
+    "workflow"
+  ]
 }
