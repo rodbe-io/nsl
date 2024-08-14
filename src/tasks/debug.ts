@@ -1,15 +1,11 @@
 import figlet from 'figlet';
 import chalk from 'chalk';
-import envPaths from 'env-paths';
 import { execSync } from 'node:child_process';
 import { homedir, machine, platform } from 'node:os';
 
 import { LONG_CONFIG_CACHE_NAME, RERUN_CACHE_NAME, SHORT_CONFIG_CACHE_NAME } from '@/constants';
 import currentPkgJson from '../../package.json';
-
-const getCacheFilePath = (cacheName: string) => {
-  return envPaths(cacheName).cache;
-};
+import { getCacheFilePath } from '@/adapters/cache';
 
 export const debugIt = (argv: Record<string, any>) => {
   const cwd = process.cwd();
