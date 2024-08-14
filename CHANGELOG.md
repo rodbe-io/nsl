@@ -1,3 +1,10 @@
+## [1.5.0](https://github.com/kevinrodbe/nsl/compare/v1.4.0...v1.5.0) (2024-08-14)
+
+
+### Features
+
+* recover check-update ([050e637](https://github.com/kevinrodbe/nsl/commit/050e6370e4e87373749b917c25d8d646bdec8d77))
+
 ## [1.4.0](https://github.com/kevinrodbe/nsl/compare/v1.3.0...v1.4.0) (2024-08-14)
 
 
