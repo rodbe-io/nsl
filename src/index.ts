@@ -15,7 +15,7 @@ import {
   groupScriptsByFolder,
   type GroupedScriptTable,
 } from './mapper';
-import { cacheFactory } from './adapters/cache';
+// import { cacheFactory } from './adapters/cache';
 import { QUATER_IN_MS, RERUN_CACHE_NAME } from './constants';
 import type { Script } from './models/script.types';
 // import { checkAvailableUpdate } from './tasks/check-update';
