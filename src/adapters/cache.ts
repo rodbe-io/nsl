@@ -1,11 +1,18 @@
 import { LRUCache } from 'lru-cache';
-import envPaths from 'env-paths';
-import { writeFileSync } from 'node:fs';
+// import envPaths from 'env-paths';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { homedir } from 'node:os';
 
 import { readFile } from '@/utils/fs';
 
-const getCacheFilePath = (cacheName: string) => {
-  return envPaths(cacheName).cache;
+export const getCacheFilePath = (cacheName: string) => {
+  // return envPaths(cacheName).cache;
+  const nslHomePath = `${homedir()}/.nsl`;
+  if (!existsSync(nslHomePath)) {
+    mkdirSync(nslHomePath);
+  }
+
+  return `${homedir()}/.nsl/${cacheName}`;
 };
 
 type CacheFactoryParams<Key extends string, Value extends {}, FC> = LRUCache.Options<Key, Value, FC> & {
