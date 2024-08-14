@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/kevinrodbe/nsl/compare/v1.1.3...v1.1.4) (2024-08-14)
+
+
+### Bug Fixes
+
+* revert cache ([caec12b](https://github.com/kevinrodbe/nsl/commit/caec12b9c3b3c1f2c6b283c86a6af8f832cb3b25))
+
 ## [1.1.3](https://github.com/kevinrodbe/nsl/compare/v1.1.2...v1.1.3) (2024-08-14)
 
 
