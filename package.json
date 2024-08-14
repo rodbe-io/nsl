@@ -35,7 +35,6 @@
     "@inquirer/search": "1.0.2",
     "@inquirer/select": "^2.4.7",
     "chalk": "^5.3.0",
-    "env-paths": "^3.0.0",
     "figlet": "^1.7.0",
     "lru-cache": "10.4.3",
     "package-json": "^10.0.1",
