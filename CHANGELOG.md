@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/kevinrodbe/nsl/compare/v1.6.0...v1.6.1) (2024-08-16)
+
+
+### Bug Fixes
+
+* check update ([70b414a](https://github.com/kevinrodbe/nsl/commit/70b414a13e55f3de607a97eb42aa189ba2b086ab))
+
 ## [1.6.0](https://github.com/kevinrodbe/nsl/compare/v1.5.0...v1.6.0) (2024-08-14)
 
 
