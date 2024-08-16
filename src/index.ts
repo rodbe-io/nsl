@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { getAllScriptsFromPackageJsons } from '@/utils/fs';
+import { getAllScriptsFromPackageJsons, getPkgJsonProject } from '@/utils/fs';
 import { fuzzySearch } from '@/utils/object';
 import {
   getGroupedScriptsWithInquirerFormat,
@@ -23,8 +23,6 @@ import { debugIt } from './tasks/debug';
 
 const runner = 'npm';
 
-const __dirname = import.meta.dirname;
-
 process.stdin.on('keypress', (_, key) => {
   if (key && key.name === 'escape') {
     process.exit(0);
@@ -33,10 +31,14 @@ process.stdin.on('keypress', (_, key) => {
 
 const init = async () => {
   const cwd = process.cwd();
-  const argv = await yargs(hideBin(process.argv)).options({
-    debug: { type: 'boolean', default: false },
-    s: { type: 'boolean', default: false },
-  }).argv;
+  const argv = await yargs(hideBin(process.argv))
+    .version(false)
+    .options({
+      all: { alias: 'a', type: 'boolean', default: false },
+      info: { alias: 'i', type: 'boolean', default: false },
+      list: { alias: 'l', type: 'boolean', default: false },
+      version: { alias: 'v', type: 'boolean', default: false },
+    }).argv;
   await checkAvailableUpdate();
 
   const { getCache, setCache } = cacheFactory<Script['value'], any>({
@@ -45,8 +47,12 @@ const init = async () => {
     cacheName: RERUN_CACHE_NAME,
   });
 
-  if (argv.debug) {
+  if (argv.info) {
     debugIt(argv);
+    process.exit(0);
+  }
+  if (argv.version) {
+    console.log(getPkgJsonProject().version);
     process.exit(0);
   }
 
@@ -59,7 +65,7 @@ const init = async () => {
 
   const prompResult = async (cliArgs: typeof argv) => {
     // TODO: investigate how to set the default value. The api does not support objects
-    if (cliArgs.s) {
+    if (cliArgs.list) {
       return await select({
         message: 'Select a script to run:',
         pageSize: 20,
@@ -96,6 +102,7 @@ const init = async () => {
 
   const commandToRun = `${runner} run ${answer.scriptName}`;
   const scriptPath = answer.folderContainer === 'Root' ? cwd : join(cwd, answer.folderContainer);
+
   execSync(commandToRun, {
     cwd: scriptPath,
     stdio: [process.stdin, process.stdout, process.stderr],

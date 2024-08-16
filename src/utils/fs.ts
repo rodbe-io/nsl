@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import type { Script } from '@/models/script.types';
 import { FOLDERS_TO_IGNORE } from '@/constants';
@@ -67,4 +68,18 @@ export const getAllScriptsFromPackageJsons = (rootPath: string): Script[] => {
   return packageJsonPaths.flatMap(pkgPath => {
     return getScriptsFromPackageJson(pkgPath);
   });
+};
+
+export const getProjectDistPath = () => {
+  const __filename = fileURLToPath(import.meta.url);
+
+  return dirname(__filename);
+};
+
+export const getPkgJsonProject = () => {
+  const distPath = getProjectDistPath();
+  const folderParent = join(distPath, '..');
+  const pkgJsonPath = join(folderParent, 'package.json');
+
+  return JSON.parse(readFileSync(pkgJsonPath, 'utf8'));
 };
