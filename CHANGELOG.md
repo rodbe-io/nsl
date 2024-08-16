@@ -1,3 +1,10 @@
+## [1.7.0](https://github.com/kevinrodbe/nsl/compare/v1.6.1...v1.7.0) (2024-08-16)
+
+
+### Features
+
+* add log helper ([daee569](https://github.com/kevinrodbe/nsl/commit/daee5691676466f47d0843f4c383f566f1176544))
+
 ## [1.6.1](https://github.com/kevinrodbe/nsl/compare/v1.6.0...v1.6.1) (2024-08-16)
 
 
