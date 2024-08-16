@@ -1,13 +1,11 @@
-import figlet from 'figlet';
-import chalk from 'chalk';
 import pkgJson from 'package-json';
 import select from '@inquirer/select';
 import { execSync } from 'node:child_process';
-import boxen from 'boxen';
 
 import { cacheFactory } from '@/adapters/cache';
 import { SHORT_CONFIG_CACHE_NAME, MONTH_IN_MS, LONG_CONFIG_CACHE_NAME, STATUS } from '@/constants';
 import { getPkgJsonProject } from '@/utils/fs';
+import { logNslBanner } from '@/helpers/log';
 
 const updateOptions = {
   message: 'Heey! Before, do you want to get the latest version? 🔥',
@@ -54,17 +52,7 @@ export const checkAvailableUpdate = async () => {
     return;
   }
 
-  console.log(
-    boxen(chalk.magenta(figlet.textSync('- NSL -', { horizontalLayout: 'full' })), {
-      borderColor: 'cyan',
-      borderStyle: 'classic',
-      margin: 1,
-      padding: 1,
-      textAlignment: 'center',
-      title: 'Node Script List',
-      titleAlignment: 'center',
-    })
-  );
+  logNslBanner();
   const update = await select(updateOptions);
 
   if (update) {
