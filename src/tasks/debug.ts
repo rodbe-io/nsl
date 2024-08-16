@@ -1,4 +1,3 @@
-import figlet from 'figlet';
 import chalk from 'chalk';
 import { execSync } from 'node:child_process';
 import { homedir, machine, platform } from 'node:os';
@@ -6,6 +5,7 @@ import { homedir, machine, platform } from 'node:os';
 import { LONG_CONFIG_CACHE_NAME, RERUN_CACHE_NAME, SHORT_CONFIG_CACHE_NAME } from '@/constants';
 import { getCacheFilePath } from '@/adapters/cache';
 import { getPkgJsonProject, getProjectDistPath } from '@/utils/fs';
+import { logNslBanner } from '@/helpers/log';
 
 export const debugIt = (argv: Record<string, any>) => {
   const cwd = process.cwd();
@@ -13,7 +13,7 @@ export const debugIt = (argv: Record<string, any>) => {
   const shortConfigCachePath = getCacheFilePath(SHORT_CONFIG_CACHE_NAME);
   const longConfigCachePath = getCacheFilePath(LONG_CONFIG_CACHE_NAME);
 
-  console.log(chalk.magenta(figlet.textSync('- NSL -', { horizontalLayout: 'full' })));
+  logNslBanner();
   console.log(chalk.black.bold.bgGreenBright('Current version ->'), getPkgJsonProject().version);
   console.log(chalk.black.bold.bgGreenBright('Directory ->'), getProjectDistPath());
   console.log(chalk.black.bold.bgGreenBright('arguments ->'), JSON.stringify(argv));
