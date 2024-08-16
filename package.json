@@ -52,6 +52,7 @@
     "@types/node": "^22.0.0",
     "@types/text-table": "^0.2.5",
     "@types/yargs": "^17.0.32",
+    "boxen": "^8.0.1",
     "conventional-changelog-conventionalcommits": "5.0.0",
     "pkgroll": "^2.4.1",
     "prettier": "^3.3.3",
