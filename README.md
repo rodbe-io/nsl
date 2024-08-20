@@ -29,8 +29,6 @@ nsl
 | --version | -v    | get current version             |                                          |
 
 ## Contributors are welcome 👋
-![partner](./assets/partner.jpg)
-
 
 ## License
 
