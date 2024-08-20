@@ -27,7 +27,7 @@ const findPackageJsonFiles = ({ absolutePath, fileListAccumulator }: FindPackage
 
   filteredLs.forEach(fileOrFolderName => {
     const filePath = join(absolutePath, fileOrFolderName);
-    if (statSync(filePath).isDirectory()) {
+    if (statSync(filePath, { throwIfNoEntry: false })?.isDirectory()) {
       fileList = findPackageJsonFiles({ absolutePath: filePath, fileListAccumulator: fileList });
     } else if (fileOrFolderName === 'package.json') {
       fileList.push(filePath);
