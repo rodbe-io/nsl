@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 import type { Script } from '@/models/script.types';
 import { FOLDERS_TO_IGNORE } from '@/constants';
+import { isEmptyObj } from './predicates';
 
 export const readFile = (filePath: string) => {
   try {
@@ -38,9 +39,9 @@ const findPackageJsonFiles = ({ absolutePath, fileListAccumulator }: FindPackage
 
 const getScriptsFromPackageJson = (pkgPath: string): Script[] => {
   const packageJson = JSON.parse(readFileSync(pkgPath, 'utf8'));
-  const scripts = packageJson.scripts as Record<string, string>;
+  const scripts: Record<string, string> = packageJson.scripts;
 
-  if (!scripts) {
+  if (isEmptyObj(scripts)) {
     return [];
   }
 
@@ -71,9 +72,9 @@ export const getAllScriptsFromPackageJsons = (rootPath: string): Script[] => {
 };
 
 export const getProjectDistPath = () => {
-  const __filename = fileURLToPath(import.meta.url);
+  const filename = fileURLToPath(import.meta.url);
 
-  return dirname(__filename);
+  return dirname(filename);
 };
 
 export const getPkgJsonProject = () => {

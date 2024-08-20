@@ -29,6 +29,7 @@
     "bump": "semantic-release",
     "hi": "echo \"hi root\"",
     "start": "pkgroll --watch",
+    "test": "vitest",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -52,12 +53,15 @@
     "@types/node": "^22.0.0",
     "@types/text-table": "^0.2.5",
     "@types/yargs": "^17.0.32",
+    "@vitest/coverage-v8": "^2.0.5",
     "boxen": "^8.0.1",
     "conventional-changelog-conventionalcommits": "5.0.0",
     "pkgroll": "^2.4.1",
     "prettier": "^3.3.3",
     "semantic-release": "20.1.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite": "^5.4.1",
+    "vitest": "^2.0.5"
   },
   "volta": {
     "node": "18.18.2"
