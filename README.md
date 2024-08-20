@@ -28,6 +28,9 @@ nsl
 | --info    | -i    | get all info tech for debugging |                                          |
 | --version | -v    | get current version             |                                          |
 
+## Contributors are welcome 👋
+![partner](./assets/partner.jpg)
+
 
 ## License
 
