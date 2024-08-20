@@ -1,3 +1,10 @@
+## [1.8.0](https://github.com/kevinrodbe/nsl/compare/v1.7.0...v1.8.0) (2024-08-20)
+
+
+### Features
+
+* ignore by param lifecycles scripts + add test + rename file + refactor flow ([b1cc2a5](https://github.com/kevinrodbe/nsl/commit/b1cc2a51d4398d3d427d1e63f1925f652665a20d))
+
 ## [1.7.0](https://github.com/kevinrodbe/nsl/compare/v1.6.1...v1.7.0) (2024-08-16)
 
 
