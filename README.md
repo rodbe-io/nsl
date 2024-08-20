@@ -22,11 +22,11 @@ nsl
 
 ## Arguments
 
-| Argument  | Alias | Description                     |
-|-----------|-------|---------------------------------|
-| --all     | -a    | List all scripts                |
-| --info    | -i    | Get all info tech for debugging |
-| --version | -v    | Get current version             |
+| Argument  | Alias | Description                     | Comment                                  |
+|-----------|-------|---------------------------------|------------------------------------------|
+| --all     | -a    | list all scripts                | by default lifecycle scripts are ignored |
+| --info    | -i    | get all info tech for debugging |                                          |
+| --version | -v    | get current version             |                                          |
 
 
 ## License

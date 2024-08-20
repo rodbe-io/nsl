@@ -1,3 +1,7 @@
+export const DEFAULT_RUNNER = 'npm';
+
+export const PAGE_SIZE = 20;
+
 export const FOLDERS_TO_IGNORE = [
   '_',
   '.git',
@@ -30,3 +34,30 @@ export const STATUS = {
   NOT_UPDATED: 'NOT_UPDATED',
   UPDATED: 'UPDATED',
 };
+
+export const NPM_SCRIPTS_TO_IGNORE = [
+  'dependencies',
+  'install',
+  'postinstall',
+  'postpack',
+  'postprepare',
+  'postpublish',
+  'postrestart',
+  'poststart',
+  'poststop',
+  'posttest',
+  'postversion',
+  'preinstall',
+  'prepack',
+  'prepare',
+  'preprepare',
+  'prepublish',
+  'prepublishOnly',
+  'prerestart',
+  'prestart,',
+  'prestop',
+  'pretest',
+  'preversion',
+  'publish',
+  'restart',
+];
