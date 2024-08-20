@@ -3,7 +3,7 @@ import select from '@inquirer/select';
 import { execSync } from 'node:child_process';
 
 import { cacheFactory } from '@/adapters/cache';
-import { SHORT_CONFIG_CACHE_NAME, MONTH_IN_MS, LONG_CONFIG_CACHE_NAME, STATUS } from '@/constants';
+import { SHORT_CONFIG_CACHE_NAME, LONG_CONFIG_CACHE_NAME, STATUS, DAY_IN_MS, WEEK_IN_MS } from '@/constants';
 import { getPkgJsonProject } from '@/utils/fs';
 import { logNslBanner } from '@/helpers/log';
 
@@ -26,14 +26,12 @@ export const checkAvailableUpdate = async () => {
   const cwd = process.cwd();
   const shortConfigCache = cacheFactory<string, any>({
     max: 10,
-    // NOTE: while we are in beta stage
-    ttl: MONTH_IN_MS, // DAY_IN_MS,
+    ttl: DAY_IN_MS,
     cacheName: SHORT_CONFIG_CACHE_NAME,
   });
   const longConfigCache = cacheFactory<string, any>({
     max: 10,
-    // NOTE: while we are in beta stage
-    ttl: MONTH_IN_MS, // WEEK_IN_MS,
+    ttl: WEEK_IN_MS,
     cacheName: LONG_CONFIG_CACHE_NAME,
   });
 
