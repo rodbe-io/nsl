@@ -1,3 +1,10 @@
+## [1.9.0](https://github.com/kevinrodbe/nsl/compare/v1.8.0...v1.9.0) (2024-08-20)
+
+
+### Features
+
+* catch for alias file ([cadaa43](https://github.com/kevinrodbe/nsl/commit/cadaa435039b28a8c68b255d50ff94732b7d2fc2))
+
 ## [1.8.0](https://github.com/kevinrodbe/nsl/compare/v1.7.0...v1.8.0) (2024-08-20)
 
 
