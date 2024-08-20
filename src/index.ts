@@ -20,7 +20,6 @@ const init = async () => {
     .options({
       all: { alias: 'a', type: 'boolean', default: false },
       info: { alias: 'i', type: 'boolean', default: false },
-      list: { alias: 'l', type: 'boolean', default: false },
       version: { alias: 'v', type: 'boolean', default: false },
     }).argv;
 
