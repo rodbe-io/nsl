@@ -1,3 +1,10 @@
+## [1.11.0](https://github.com/kevinrodbe/nsl/compare/v1.10.0...v1.11.0) (2024-08-20)
+
+
+### Features
+
+* change cache duration ([fa2e826](https://github.com/kevinrodbe/nsl/commit/fa2e8268139edb88f3d161828e383a2a736fafdd))
+
 ## [1.10.0](https://github.com/kevinrodbe/nsl/compare/v1.9.0...v1.10.0) (2024-08-20)
 
 
