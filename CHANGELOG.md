@@ -1,3 +1,10 @@
+## [1.10.0](https://github.com/kevinrodbe/nsl/compare/v1.9.0...v1.10.0) (2024-08-20)
+
+
+### Features
+
+* remove unused cli opt ([9f3dfb6](https://github.com/kevinrodbe/nsl/commit/9f3dfb6b8eaff065d866f84374d2800347cc788e))
+
 ## [1.9.0](https://github.com/kevinrodbe/nsl/compare/v1.8.0...v1.9.0) (2024-08-20)
 
 
