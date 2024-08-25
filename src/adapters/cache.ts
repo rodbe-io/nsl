@@ -19,7 +19,7 @@ type CacheFactoryParams<Key extends string, Value extends {}, FC> = LRUCache.Opt
 export const cacheFactory = <Value extends {}, FC>(opts: CacheFactoryParams<string, Value, FC>) => {
   const cache = new LRUCache(opts);
   const cacheFilePath = getCacheFilePath(opts.cacheName);
-  cache.load(readFile(cacheFilePath));
+  cache.load(readFile(cacheFilePath) || []);
   const purged = cache.purgeStale();
 
   const dumpCache = () => {

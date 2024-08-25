@@ -4,7 +4,7 @@ import { execSync } from 'node:child_process';
 
 import { cacheFactory } from '@/adapters/cache';
 import { SHORT_CONFIG_CACHE_NAME, LONG_CONFIG_CACHE_NAME, STATUS, DAY_IN_MS, WEEK_IN_MS } from '@/constants';
-import { getPkgJsonProject } from '@/utils/fs';
+import { getNSLPkgJson } from '@/utils/fs';
 import { logNslBanner } from '@/helpers/log';
 
 const updateOptions = {
@@ -43,9 +43,9 @@ export const checkAvailableUpdate = async () => {
     return;
   }
 
-  const remotePkgJson = await pkgJson(getPkgJsonProject().name);
+  const remotePkgJson = await pkgJson(getNSLPkgJson().name);
 
-  if (remotePkgJson.version === getPkgJsonProject().version) {
+  if (remotePkgJson.version === getNSLPkgJson().version) {
     longConfigCache.setCache('status', STATUS.UPDATED);
     return;
   }

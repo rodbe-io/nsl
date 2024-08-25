@@ -3,7 +3,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { getPkgJsonProject } from '@/utils/fs';
+import { getNSLPkgJson } from '@/utils/fs';
 import { checkAvailableUpdate } from './tasks/check-update';
 import { debugIt } from './tasks/get-info';
 import { execScript } from './tasks/exec-script';
@@ -30,7 +30,7 @@ const init = async () => {
     process.exit(0);
   }
   if (argv.version) {
-    console.log(getPkgJsonProject().version);
+    console.log(getNSLPkgJson().version);
     process.exit(0);
   }
 

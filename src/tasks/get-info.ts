@@ -4,7 +4,7 @@ import { homedir, machine, platform } from 'node:os';
 
 import { LONG_CONFIG_CACHE_NAME, RERUN_CACHE_NAME, SHORT_CONFIG_CACHE_NAME } from '@/constants';
 import { getCacheFilePath } from '@/adapters/cache';
-import { getPkgJsonProject, getProjectDistPath } from '@/utils/fs';
+import { getNSLPkgJson, getNSLDistPath } from '@/utils/fs';
 import { logNslBanner } from '@/helpers/log';
 
 export const debugIt = (argv: Record<string, any>) => {
@@ -14,8 +14,8 @@ export const debugIt = (argv: Record<string, any>) => {
   const longConfigCachePath = getCacheFilePath(LONG_CONFIG_CACHE_NAME);
 
   logNslBanner();
-  console.log(chalk.black.bold.bgGreenBright('Current version ->'), getPkgJsonProject().version);
-  console.log(chalk.black.bold.bgGreenBright('Directory ->'), getProjectDistPath());
+  console.log(chalk.black.bold.bgGreenBright('Current version ->'), getNSLPkgJson().version);
+  console.log(chalk.black.bold.bgGreenBright('Directory ->'), getNSLDistPath());
   console.log(chalk.black.bold.bgGreenBright('arguments ->'), JSON.stringify(argv));
   console.log(chalk.black.bold.bgGreenBright('Home ->'), homedir());
   console.log(chalk.black.bold.bgGreenBright('Machine ->'), machine());

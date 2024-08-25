@@ -1,5 +1,6 @@
 import { purge } from './array';
 
+type KeyFormat = string | `${string}.${string}`;
 export const getProp =
   <T extends object, K extends keyof T>(key: string) =>
   (obj: T): T[K] | string | undefined => {
@@ -25,9 +26,12 @@ export const fuzzySearch = <T extends object>({ searchText, items, key }: FuzzyS
     // eslint-disable-next-line security-node/non-literal-reg-expr
     const regExp = new RegExp(`(${text.toLowerCase()})`);
     filtered = filtered.filter(item => {
-      const textToMatch = getProp(key)(item)?.toLowerCase() || '';
+      const matchProp = getProp(key)(item);
+      if (typeof matchProp !== 'string') {
+        return false;
+      }
 
-      return regExp.test(textToMatch);
+      return regExp.test(matchProp.toLowerCase());
     });
   });
 

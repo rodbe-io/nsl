@@ -11,7 +11,7 @@ export const readFile = (filePath: string) => {
     const file = readFileSync(filePath, 'utf8');
     return JSON.parse(file.toString());
   } catch (e) {
-    return [];
+    return null;
   }
 };
 
@@ -72,14 +72,14 @@ export const getAllScriptsFromPackageJsons = (rootPath: string): Script[] => {
   });
 };
 
-export const getProjectDistPath = () => {
+export const getNSLDistPath = () => {
   const filename = fileURLToPath(import.meta.url);
 
   return dirname(filename);
 };
 
-export const getPkgJsonProject = () => {
-  const distPath = getProjectDistPath();
+export const getNSLPkgJson = () => {
+  const distPath = getNSLDistPath();
   const folderParent = join(distPath, '..');
   const pkgJsonPath = join(folderParent, 'package.json');
 
