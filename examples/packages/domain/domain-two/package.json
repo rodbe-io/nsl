@@ -1,8 +1,9 @@
 {
   "name": "domain-two-name",
   "main": "index.js",
+  "packageManager": "bun@1.1.26",
   "scripts": {
-    "test-d-2": "echo \"hi domain two\"",
+    "test-d-2": "echo \"hi domain two bun\"",
     "start-d-2": "node domain-two.js",
     "node-2": "node -v"
   },

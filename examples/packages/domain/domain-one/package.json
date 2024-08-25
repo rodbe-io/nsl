@@ -1,8 +1,9 @@
 {
   "name": "domain-one-name",
   "main": "index.js",
+  "packageManager": "npm@9.5.0",
   "scripts": {
-    "test-d-1": "echo \"hi domain one\"",
+    "test-d-1": "echo \"hi domain one npm\"",
     "start-d-1": "node domain-one.js",
     "node-1": "node -v"
   },

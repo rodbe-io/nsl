@@ -10,10 +10,11 @@ import { getAllScriptsFromPackageJsons } from '@/utils/fs';
 import { fuzzySearch } from '@/utils/object';
 import { execSync } from 'child_process';
 import { join } from 'path';
-import { DEFAULT_RUNNER, NPM_SCRIPTS_TO_IGNORE, PAGE_SIZE, QUATER_IN_MS, RERUN_CACHE_NAME } from '@/constants';
+import { NPM_SCRIPTS_TO_IGNORE, PAGE_SIZE, QUATER_IN_MS, RERUN_CACHE_NAME } from '@/constants';
 import { cacheFactory } from '@/adapters/cache';
 import type { Script } from '@/models/script.types';
 import { compose } from '@/utils/fp';
+import { getPackageManager } from '@/utils/node';
 
 type ExecScriptParams = {
   all: boolean;
@@ -62,9 +63,10 @@ export const execScript = async ({ all }: ExecScriptParams) => {
   });
 
   setCache(cwd, answer);
-
-  const commandToRun = `${DEFAULT_RUNNER} run ${answer.scriptName}`;
+  const rummer = getPackageManager(answer.packageManager);
+  const commandToRun = `${rummer} run ${answer.scriptName}`;
   const scriptPath = answer.folderContainer === 'Root' ? cwd : join(cwd, answer.folderContainer);
+  console.log(commandToRun);
 
   execSync(commandToRun, {
     cwd: scriptPath,

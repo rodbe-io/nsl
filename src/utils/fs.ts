@@ -40,12 +40,13 @@ const findPackageJsonFiles = ({ absolutePath, fileListAccumulator }: FindPackage
 const getScriptsFromPackageJson = (pkgPath: string): Script[] => {
   const packageJson = JSON.parse(readFileSync(pkgPath, 'utf8'));
   const scripts: Record<string, string> = packageJson.scripts;
+  const { packageManager } = packageJson;
 
   if (isEmptyObj(scripts)) {
     return [];
   }
 
-  return Object.entries(scripts).map(([scriptName, contentScript]) => {
+  return Object.entries(scripts).map<Script>(([scriptName, contentScript]) => {
     const folderContainer =
       pkgPath
         .replace(process.cwd(), '')
@@ -53,7 +54,7 @@ const getScriptsFromPackageJson = (pkgPath: string): Script[] => {
         .replace(/^\/|\/$/g, '') || 'Root';
 
     return {
-      value: { scriptName, folderContainer, contentScript },
+      value: { scriptName, folderContainer, contentScript, packageManager },
     };
   });
 };

@@ -1,12 +1,16 @@
 {
   "name": "service-one-name",
   "main": "index.js",
+  "packageManager": "yarn@1.22.22",
   "scripts": {
-    "test-s-1": "echo \"hi service one\"",
+    "test-s-1": "echo \"hi service one yarn\"",
     "start-s-1": "node service-one.js",
     "build-s-1": "echo \"build service one\""
   },
   "dependencies": {
     "body-parser": "^1.17.1"
+  },
+  "volta": {
+    "yarn": "1.22.22"
   }
 }
