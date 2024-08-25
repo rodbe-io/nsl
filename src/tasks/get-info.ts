@@ -14,14 +14,16 @@ export const debugIt = (argv: Record<string, any>) => {
   const longConfigCachePath = getCacheFilePath(LONG_CONFIG_CACHE_NAME);
 
   logNslBanner();
+
   console.log(chalk.black.bold.bgGreenBright('Current version ->'), getNSLPkgJson().version);
-  console.log(chalk.black.bold.bgGreenBright('Directory ->'), getNSLDistPath());
-  console.log(chalk.black.bold.bgGreenBright('arguments ->'), JSON.stringify(argv));
+  console.log(chalk.black.bold.bgGreenBright('NSL directory ->'), getNSLDistPath());
+  console.log(chalk.black.bold.bgGreenBright('Arguments ->'), JSON.stringify(argv));
   console.log(chalk.black.bold.bgGreenBright('Home ->'), homedir());
   console.log(chalk.black.bold.bgGreenBright('Machine ->'), machine());
   console.log(chalk.black.bold.bgGreenBright('Platform ->'), platform());
   console.log(chalk.black.bold.bgGreenBright('rerunCachePath ->'), rerunCachePath);
   console.log(chalk.black.bold.bgGreenBright('shortConfigCachePath ->'), shortConfigCachePath);
   console.log(chalk.black.bold.bgGreenBright('longConfigCachePath ->'), longConfigCachePath);
+
   execSync('node -v', { cwd, stdio: [process.stdin, process.stdout, process.stderr] });
 };
