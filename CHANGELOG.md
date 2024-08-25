@@ -1,3 +1,10 @@
+## [1.12.0](https://github.com/kevinrodbe/nsl/compare/v1.11.0...v1.12.0) (2024-08-25)
+
+
+### Features
+
+* support packageManager runner by monorepo ([695b5f3](https://github.com/kevinrodbe/nsl/commit/695b5f36d0910f90c26eebf6c6fc8251d2b844e0))
+
 ## [1.11.0](https://github.com/kevinrodbe/nsl/compare/v1.10.0...v1.11.0) (2024-08-20)
 
 
