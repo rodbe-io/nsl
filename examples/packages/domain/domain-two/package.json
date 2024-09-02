@@ -5,7 +5,8 @@
   "scripts": {
     "test-d-2": "echo \"hi domain two bun\"",
     "start-d-2": "node domain-two.js",
-    "node-2": "node -v"
+    "node-2": "node -v",
+    "script-to-ignore": "echo \"ignored\""
   },
   "dependencies": {
     "body-parser": "^1.17.1"

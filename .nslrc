@@ -1,0 +1,5 @@
+{
+  "ignoreScripts": [
+    "script-to-ignore"
+  ]
+}

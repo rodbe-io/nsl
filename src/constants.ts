@@ -61,3 +61,5 @@ export const NPM_SCRIPTS_TO_IGNORE = [
   'publish',
   'restart',
 ];
+
+export const CONFIG_FILES = ['.nslrc', '.nslrc.json', '.nslrc.js', '.nslrc.cjs'];

@@ -1,6 +1,5 @@
 import { purge } from './array';
 
-type KeyFormat = string | `${string}.${string}`;
 export const getProp =
   <T extends object, K extends keyof T>(key: string) =>
   (obj: T): T[K] | string | undefined => {

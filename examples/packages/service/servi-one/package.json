@@ -5,7 +5,8 @@
   "scripts": {
     "test-s-1": "echo \"hi service one yarn\"",
     "start-s-1": "node service-one.js",
-    "build-s-1": "echo \"build service one\""
+    "build-s-1": "echo \"build service one\"",
+    "script-to-ignore": "echo \"ignored\""
   },
   "dependencies": {
     "body-parser": "^1.17.1"

@@ -2,7 +2,7 @@ import { LRUCache } from 'lru-cache';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 
-import { readFile } from '@/utils/fs';
+import { readParsedFile } from '@/utils/fs';
 
 export const getCacheFilePath = (cacheName: string) => {
   const nslHomePath = `${homedir()}/.nsl`;
@@ -19,7 +19,7 @@ type CacheFactoryParams<Key extends string, Value extends {}, FC> = LRUCache.Opt
 export const cacheFactory = <Value extends {}, FC>(opts: CacheFactoryParams<string, Value, FC>) => {
   const cache = new LRUCache(opts);
   const cacheFilePath = getCacheFilePath(opts.cacheName);
-  cache.load(readFile(cacheFilePath) || []);
+  cache.load(readParsedFile(cacheFilePath) || []);
   const purged = cache.purgeStale();
 
   const dumpCache = () => {

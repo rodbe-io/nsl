@@ -19,6 +19,7 @@ const init = async () => {
     .version(false)
     .options({
       all: { alias: 'a', type: 'boolean', default: false },
+      debug: { alias: 'd', type: 'boolean', default: false },
       info: { alias: 'i', type: 'boolean', default: false },
       version: { alias: 'v', type: 'boolean', default: false },
     }).argv;

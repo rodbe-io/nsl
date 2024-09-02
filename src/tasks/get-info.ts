@@ -6,6 +6,7 @@ import { LONG_CONFIG_CACHE_NAME, RERUN_CACHE_NAME, SHORT_CONFIG_CACHE_NAME } fro
 import { getCacheFilePath } from '@/adapters/cache';
 import { getNSLPkgJson, getNSLDistPath } from '@/utils/fs';
 import { logNslBanner } from '@/helpers/log';
+import { getConfigFilePath } from './get-config';
 
 export const debugIt = (argv: Record<string, any>) => {
   const cwd = process.cwd();
@@ -17,6 +18,7 @@ export const debugIt = (argv: Record<string, any>) => {
 
   console.log(chalk.black.bold.bgGreenBright('Current version ->'), getNSLPkgJson().version);
   console.log(chalk.black.bold.bgGreenBright('NSL directory ->'), getNSLDistPath());
+  console.log(chalk.black.bold.bgGreenBright('ConfigFilePath ->'), getConfigFilePath(cwd, { debug: true }));
   console.log(chalk.black.bold.bgGreenBright('Arguments ->'), JSON.stringify(argv));
   console.log(chalk.black.bold.bgGreenBright('Home ->'), homedir());
   console.log(chalk.black.bold.bgGreenBright('Machine ->'), machine());

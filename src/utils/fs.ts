@@ -6,9 +6,10 @@ import type { Script } from '@/models/script.types';
 import { FOLDERS_TO_IGNORE } from '@/constants';
 import { isEmptyObj } from './predicates';
 
-export const readFile = (filePath: string) => {
+export const readParsedFile = (filePath: string) => {
   try {
     const file = readFileSync(filePath, 'utf8');
+
     return JSON.parse(file.toString());
   } catch (e) {
     return null;
