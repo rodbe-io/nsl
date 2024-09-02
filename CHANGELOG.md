@@ -1,3 +1,10 @@
+## [1.13.0](https://github.com/kevinrodbe/nsl/compare/v1.12.0...v1.13.0) (2024-09-02)
+
+
+### Features
+
+* support config file + update tsConfig ([5da1752](https://github.com/kevinrodbe/nsl/commit/5da175277e9d04990a649c2247e65e922c4a5950))
+
 ## [1.12.0](https://github.com/kevinrodbe/nsl/compare/v1.11.0...v1.12.0) (2024-08-25)
 
 
