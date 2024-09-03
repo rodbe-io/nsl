@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/kevinrodbe/nsl/compare/v1.13.0...v1.13.1) (2024-09-03)
+
+
+### Bug Fixes
+
+* find up until root folder ([d466572](https://github.com/kevinrodbe/nsl/commit/d46657279198592f62d5c397649393bd61f0e8bc))
+
 ## [1.13.0](https://github.com/kevinrodbe/nsl/compare/v1.12.0...v1.13.0) (2024-09-02)
 
 
