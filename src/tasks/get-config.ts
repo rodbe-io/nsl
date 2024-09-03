@@ -1,4 +1,4 @@
-import { extname, join } from 'node:path';
+import { extname, join, parse } from 'node:path';
 import { existsSync } from 'node:fs';
 
 import { CONFIG_FILES } from '@/constants';
@@ -9,8 +9,11 @@ import type { Config, ExecScriptParams } from '@/models/script.types';
 export const getConfigFilePath = (rootPath: string, argv?: ExecScriptParams) => {
   let currentPath = rootPath;
   let configFileName = '';
+  const { root, dir } = parse(rootPath);
 
-  while (currentPath !== '/') {
+  console.log(11, root, '---', dir);
+
+  while (currentPath !== root) {
     const foundConfigFileName = CONFIG_FILES.find(file => existsSync(join(currentPath, file)));
 
     if (foundConfigFileName) {
