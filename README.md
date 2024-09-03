@@ -1,4 +1,4 @@
-# NSL ⚡️
+# NSL ⚡️ - Node Script List
 List, fuzzy search and run scripts from any type of project
 
 > Easy and fast way to run npm scripts  🚀
@@ -48,7 +48,7 @@ The options you can use in the configuration file.
 
 ## Basic configuration
 
-JSON:
+JSON: `.nslrc` o `.nslrc.json` file
 ```json
 {
   "ignoreScripts": [
@@ -59,7 +59,7 @@ JSON:
 }
 ```
 
-JS (ES Modules):
+JS (ES Modules): `.nslrc.js` file
 ```js
 export default {
   ignoreScripts: [
@@ -70,7 +70,7 @@ export default {
 };
 ```
 
-CJS (CommonJS):
+CJS (CommonJS): `.nslrc.cjs` file
 ```js
 module.exports = {
   ignoreScripts: [

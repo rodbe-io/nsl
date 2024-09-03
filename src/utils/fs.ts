@@ -6,7 +6,7 @@ import type { Script } from '@/models/script.types';
 import { FOLDERS_TO_IGNORE } from '@/constants';
 import { isEmptyObj } from './predicates';
 
-export const readParsedFile = (filePath: string) => {
+export const readJsonParsedFile = (filePath: string) => {
   try {
     const file = readFileSync(filePath, 'utf8');
 

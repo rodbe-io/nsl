@@ -32,7 +32,7 @@ const filterScripts = (all?: boolean) => (config: Config | null) => (scripts: Sc
 export const execScript = async ({ all, debug }: ExecScriptParams) => {
   const cwd = process.cwd();
   const { setCache } = cacheFactory<Script['value'], any>({
-    max: 3,
+    max: 5,
     ttl: QUATER_IN_MS,
     cacheName: RERUN_CACHE_NAME,
   });

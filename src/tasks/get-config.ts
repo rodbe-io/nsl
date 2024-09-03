@@ -2,16 +2,14 @@ import { extname, join, parse } from 'node:path';
 import { existsSync } from 'node:fs';
 
 import { CONFIG_FILES } from '@/constants';
-import { readParsedFile } from '@/utils/fs';
+import { readJsonParsedFile } from '@/utils/fs';
 import { to } from '@/utils/async';
 import type { Config, ExecScriptParams } from '@/models/script.types';
 
 export const getConfigFilePath = (rootPath: string, argv?: ExecScriptParams) => {
   let currentPath = rootPath;
   let configFileName = '';
-  const { root, dir } = parse(rootPath);
-
-  console.log(11, root, '---', dir);
+  const { root } = parse(rootPath);
 
   while (currentPath !== root) {
     const foundConfigFileName = CONFIG_FILES.find(file => existsSync(join(currentPath, file)));
@@ -25,6 +23,10 @@ export const getConfigFilePath = (rootPath: string, argv?: ExecScriptParams) => 
     }
 
     currentPath = join(currentPath, '..');
+  }
+
+  if (currentPath === root) {
+    return null;
   }
 
   return join(currentPath, configFileName);
@@ -53,5 +55,5 @@ export const getConfig = async (rootPath: string, argv?: ExecScriptParams): Prom
     return require(configFilePath);
   }
 
-  return readParsedFile(configFilePath);
+  return readJsonParsedFile(configFilePath);
 };
