@@ -1,3 +1,10 @@
+## [1.14.0](https://github.com/kevinrodbe/nsl/compare/v1.13.1...v1.14.0) (2024-09-03)
+
+
+### Features
+
+* up cache to 5 + return null when there is no config file ([df42ab4](https://github.com/kevinrodbe/nsl/commit/df42ab45c8e8a595c1b63f553d6481fcc2fa4a3c))
+
 ## [1.13.1](https://github.com/kevinrodbe/nsl/compare/v1.13.0...v1.13.1) (2024-09-03)
 
 
