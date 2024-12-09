@@ -1,6 +1,10 @@
 import { DEFAULT_RUNNER } from '@/constants';
 
-export const getPackageManager = (packageManager: string) => {
+export const getPackageManager = (packageManager: string | null) => {
+  if (!packageManager) {
+    return DEFAULT_RUNNER;
+  }
+
   const regex = /npm|pnpm|yarn|bun/;
   const match = regex.exec(packageManager);
 

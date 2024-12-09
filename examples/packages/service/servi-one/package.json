@@ -1,6 +1,8 @@
 {
   "name": "service-one-name",
   "main": "index.js",
+  "version": "0.0.0",
+  "private": true,
   "packageManager": "yarn@1.22.22",
   "scripts": {
     "test-s-1": "echo \"hi service one yarn\"",

@@ -9,7 +9,7 @@ type GroupedScript = {
 };
 export const groupScriptsByFolder = (scripts: Script[]): GroupedScript => {
   return scripts.reduce<GroupedScript>((acc, curr) => {
-    const folderContainer = curr.value.folderContainer;
+    const { folderContainer } = curr.value;
 
     if (!acc[folderContainer]) {
       acc[folderContainer] = [curr];
@@ -57,11 +57,26 @@ export const getGroupedScriptsWithInquirerFormat = (
       }
 
       acc.push(new Separator(chalk.white.bold.bgMagenta(`📦 ${folderContainer}: `)));
-
       acc.push(...currentScripts);
 
       return acc;
     },
     []
   );
+};
+
+export const getInfoFromRootPackageJson = (groupedScripts: GroupedScript) => {
+  const rootGroup = groupedScripts['Root'];
+
+  if (!Array.isArray(rootGroup) || !rootGroup[0]?.value) {
+    return { packageManager: null };
+  }
+
+  const { packageManager } = rootGroup[0].value;
+
+  if (!packageManager) {
+    return { packageManager: null };
+  }
+
+  return { packageManager };
 };

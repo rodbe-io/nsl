@@ -18,11 +18,12 @@ export const getConfigFilePath = (rootPath: string, argv?: ExecScriptParams) => 
       configFileName = foundConfigFileName;
       break;
     }
-    if (argv?.debug) {
-      console.log(66, 'debug:', currentPath);
-    }
 
     currentPath = join(currentPath, '..');
+  }
+
+  if (argv?.debug) {
+    console.log('debug:', currentPath);
   }
 
   if (currentPath === root) {

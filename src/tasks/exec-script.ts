@@ -1,21 +1,22 @@
 import search from '@inquirer/search';
-import { execSync } from 'child_process';
-import { join } from 'node:path';
+import { execSync } from 'node:child_process';
+import chalk from 'chalk';
 
 import {
   groupScriptsByFolder,
   groupedScriptsWithTableProp,
   getGroupedScriptsWithInquirerFormat,
   type GroupedScriptTable,
+  getInfoFromRootPackageJson,
 } from '@/mapper';
 import { getAllScriptsFromPackageJsons } from '@/utils/fs';
-import { getPackageManager } from '@/utils/node';
 import { fuzzySearch } from '@/utils/object';
 import { compose } from '@/utils/fp';
 import { NPM_SCRIPTS_TO_IGNORE, PAGE_SIZE, QUATER_IN_MS, RERUN_CACHE_NAME } from '@/constants';
 import { cacheFactory } from '@/adapters/cache';
 import type { Config, ExecScriptParams, Script } from '@/models/script.types';
 import { getConfig } from './get-config';
+import { getCommandToRun } from '@/helpers/node';
 
 const filterScripts = (all?: boolean) => (config: Config | null) => (scripts: Script[]) => {
   if (all) {
@@ -40,6 +41,7 @@ export const execScript = async ({ all, debug }: ExecScriptParams) => {
   const groupedScripts = compose(groupScriptsByFolder, filterScripts(all)(config), getAllScriptsFromPackageJsons)(cwd);
   const groupedScriptsWithTable = groupedScriptsWithTableProp(groupedScripts);
   const groupedScriptsWithInquirerFormat = getGroupedScriptsWithInquirerFormat(groupedScriptsWithTable);
+  const { packageManager: rootPackageManager } = getInfoFromRootPackageJson(groupedScripts);
 
   const answer = await search({
     message: 'Select or search a script to run:',
@@ -64,13 +66,16 @@ export const execScript = async ({ all, debug }: ExecScriptParams) => {
   });
 
   setCache(cwd, answer);
-  const rummer = getPackageManager(answer.packageManager);
-  const commandToRun = `${rummer} run ${answer.scriptName}`;
-  const scriptPath = answer.folderContainer === 'Root' ? cwd : join(cwd, answer.folderContainer);
+  const commandToRun = getCommandToRun(answer, rootPackageManager);
   console.log(commandToRun);
 
-  execSync(commandToRun, {
-    cwd: scriptPath,
-    stdio: [process.stdin, process.stdout, process.stderr],
-  });
+  try {
+    execSync(commandToRun, {
+      cwd,
+      stdio: [process.stdin, process.stdout, process.stderr],
+    });
+  } catch (err) {
+    console.log(chalk.white.bold.bgMagenta(`Ups, try to run the script manually `));
+    console.log(commandToRun);
+  }
 };

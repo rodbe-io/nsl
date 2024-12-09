@@ -8,7 +8,7 @@ import { getNSLPkgJson, getNSLDistPath } from '@/utils/fs';
 import { logNslBanner } from '@/helpers/log';
 import { getConfigFilePath } from './get-config';
 
-export const debugIt = (argv: Record<string, any>) => {
+export const aboutNSL = (argv: Record<string, any>) => {
   const cwd = process.cwd();
   const rerunCachePath = getCacheFilePath(RERUN_CACHE_NAME);
   const shortConfigCachePath = getCacheFilePath(SHORT_CONFIG_CACHE_NAME);

@@ -3,6 +3,7 @@ export type Script = {
     contentScript: string;
     folderContainer: string;
     packageManager: string;
+    packageName: string;
     scriptName: string;
   };
 };

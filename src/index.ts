@@ -5,7 +5,7 @@ import { hideBin } from 'yargs/helpers';
 
 import { getNSLPkgJson } from '@/utils/fs';
 import { checkAvailableUpdate } from './tasks/check-update';
-import { debugIt } from './tasks/get-info';
+import { aboutNSL } from './tasks/get-info';
 import { execScript } from './tasks/exec-script';
 
 process.stdin.on('keypress', (_, key) => {
@@ -27,7 +27,7 @@ const init = async () => {
   await checkAvailableUpdate();
 
   if (argv.info) {
-    debugIt(argv);
+    aboutNSL(argv);
     process.exit(0);
   }
   if (argv.version) {
