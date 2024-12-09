@@ -1,3 +1,10 @@
+## [1.15.0](https://github.com/kevinrodbe/nsl/compare/v1.14.0...v1.15.0) (2024-12-09)
+
+
+### Features
+
+* exec script with workspace argument ([ec4730e](https://github.com/kevinrodbe/nsl/commit/ec4730ef653b9f8306a4c20cfdd8284d3f0a21ce))
+
 ## [1.14.0](https://github.com/kevinrodbe/nsl/compare/v1.13.1...v1.14.0) (2024-09-03)
 
 
