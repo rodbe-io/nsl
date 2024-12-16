@@ -1,3 +1,10 @@
+## [1.16.0](https://github.com/kevinrodbe/nsl/compare/v1.15.0...v1.16.0) (2024-12-16)
+
+
+### Features
+
+* add print argument ([0a608c4](https://github.com/kevinrodbe/nsl/commit/0a608c46f0657bae21032772d5c030673f58dfd8))
+
 ## [1.15.0](https://github.com/kevinrodbe/nsl/compare/v1.14.0...v1.15.0) (2024-12-09)
 
 
