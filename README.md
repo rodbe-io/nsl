@@ -27,6 +27,7 @@ nsl
 | --all     | -a    | list all scripts                | by default lifecycle scripts are ignored |
 | --info    | -i    | get all info tech for debugging |                                          |
 | --version | -v    | get current version             |                                          |
+| --print   | -p    | print the selected script       | no exec the script, just print it        |
 
 ## Configuration file
 

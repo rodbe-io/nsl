@@ -22,6 +22,7 @@ const init = async () => {
       debug: { alias: 'd', type: 'boolean', default: false },
       info: { alias: 'i', type: 'boolean', default: false },
       version: { alias: 'v', type: 'boolean', default: false },
+      print: { alias: 'p', type: 'boolean', default: false },
     }).argv;
 
   await checkAvailableUpdate();

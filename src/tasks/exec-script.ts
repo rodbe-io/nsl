@@ -30,7 +30,7 @@ const filterScripts = (all?: boolean) => (config: Config | null) => (scripts: Sc
   });
 };
 
-export const execScript = async ({ all, debug }: ExecScriptParams) => {
+export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
   const cwd = process.cwd();
   const { setCache } = cacheFactory<Script['value'], any>({
     max: 5,
@@ -67,7 +67,11 @@ export const execScript = async ({ all, debug }: ExecScriptParams) => {
 
   setCache(cwd, answer);
   const commandToRun = getCommandToRun(answer, rootPackageManager);
-  console.log(commandToRun);
+  console.log(chalk.black.bold.bgGreenBright(commandToRun));
+
+  if (print) {
+    process.exit(0);
+  }
 
   try {
     execSync(commandToRun, {

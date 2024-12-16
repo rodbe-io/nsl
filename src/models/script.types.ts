@@ -19,4 +19,5 @@ export type Config = {
 export type ExecScriptParams = {
   all?: boolean;
   debug?: boolean;
+  print?: boolean;
 };
