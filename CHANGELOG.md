@@ -1,3 +1,10 @@
+## [1.18.0](https://github.com/kevinrodbe/nsl/compare/v1.17.0...v1.18.0) (2024-12-25)
+
+
+### Features
+
+* downgrade boxen version ([9c22149](https://github.com/kevinrodbe/nsl/commit/9c22149728e1a6aa5490c864ec2a09370370eb1b))
+
 ## [1.17.0](https://github.com/kevinrodbe/nsl/compare/v1.16.0...v1.17.0) (2024-12-25)
 
 
