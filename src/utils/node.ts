@@ -1,6 +1,6 @@
 import { DEFAULT_RUNNER } from '@/constants';
 
-export const getPackageManager = (packageManager: string | null) => {
+export const getPackageManager = (packageManager?: string) => {
   if (!packageManager) {
     return DEFAULT_RUNNER;
   }

@@ -2,7 +2,7 @@ import { extname, join, parse } from 'node:path';
 import { existsSync } from 'node:fs';
 
 import { CONFIG_FILES } from '@/constants';
-import { readJsonParsedFile } from '@/utils/fs';
+import { readJsonFile } from '@/utils/fs';
 import { to } from '@/utils/async';
 import type { Config, ExecScriptParams } from '@/models/script.types';
 
@@ -56,5 +56,5 @@ export const getConfig = async (rootPath: string, argv?: ExecScriptParams): Prom
     return require(configFilePath);
   }
 
-  return readJsonParsedFile(configFilePath);
+  return readJsonFile(configFilePath);
 };

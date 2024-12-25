@@ -64,19 +64,3 @@ export const getGroupedScriptsWithInquirerFormat = (
     []
   );
 };
-
-export const getInfoFromRootPackageJson = (groupedScripts: GroupedScript) => {
-  const rootGroup = groupedScripts['Root'];
-
-  if (!Array.isArray(rootGroup) || !rootGroup[0]?.value) {
-    return { packageManager: null };
-  }
-
-  const { packageManager } = rootGroup[0].value;
-
-  if (!packageManager) {
-    return { packageManager: null };
-  }
-
-  return { packageManager };
-};

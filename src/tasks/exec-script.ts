@@ -7,9 +7,8 @@ import {
   groupedScriptsWithTableProp,
   getGroupedScriptsWithInquirerFormat,
   type GroupedScriptTable,
-  getInfoFromRootPackageJson,
 } from '@/mapper';
-import { getAllScriptsFromPackageJsons } from '@/utils/fs';
+import { getAllScriptsFromPackageJsons, getRootPackageJson } from '@/utils/fs';
 import { fuzzySearch } from '@/utils/object';
 import { compose } from '@/utils/fp';
 import { NPM_SCRIPTS_TO_IGNORE, PAGE_SIZE, QUATER_IN_MS, RERUN_CACHE_NAME } from '@/constants';
@@ -41,7 +40,7 @@ export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
   const groupedScripts = compose(groupScriptsByFolder, filterScripts(all)(config), getAllScriptsFromPackageJsons)(cwd);
   const groupedScriptsWithTable = groupedScriptsWithTableProp(groupedScripts);
   const groupedScriptsWithInquirerFormat = getGroupedScriptsWithInquirerFormat(groupedScriptsWithTable);
-  const { packageManager: rootPackageManager } = getInfoFromRootPackageJson(groupedScripts);
+  const rootPkgJson = getRootPackageJson(cwd);
 
   const answer = await search({
     message: 'Select or search a script to run:',
@@ -66,7 +65,7 @@ export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
   });
 
   setCache(cwd, answer);
-  const commandToRun = getCommandToRun(answer, rootPackageManager);
+  const commandToRun = getCommandToRun(answer, rootPkgJson.packageManager);
   console.log(chalk.black.bold.bgGreenBright(commandToRun));
 
   if (print) {

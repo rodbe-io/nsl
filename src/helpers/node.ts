@@ -1,11 +1,11 @@
 import type { Script } from '@/models/script.types';
 import { getPackageManager } from '@/utils/node';
 
-export const getCommandToRun = (answerSelected: Script['value'], rootPackageManager: string | null) => {
+export const getCommandToRun = (answerSelected: Script['value'], rootPackageManager: string) => {
   const { folderContainer, packageManager, scriptName, packageName } = answerSelected;
   const runner = getPackageManager(packageManager || rootPackageManager);
 
-  if (folderContainer === 'Root' || !rootPackageManager) {
+  if (folderContainer === 'Root') {
     return `${runner} run ${scriptName}`;
   }
 

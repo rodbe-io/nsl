@@ -1,12 +1,13 @@
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import type { Script } from '@/models/script.types';
 import { FOLDERS_TO_IGNORE } from '@/constants';
 import { isEmptyObj } from './predicates';
+import { getPackageManager } from './node';
 
-export const readJsonParsedFile = (filePath: string) => {
+export const readJsonFile = (filePath: string) => {
   try {
     const file = readFileSync(filePath, 'utf8');
 
@@ -55,9 +56,31 @@ const getScriptsFromPackageJson = (pkgPath: string): Script[] => {
         .replace(/^\/|\/$/g, '') || 'Root';
 
     return {
-      value: { scriptName, folderContainer, contentScript, packageManager, packageName: name },
+      value: {
+        contentScript,
+        folderContainer,
+        packageManager,
+        packageName: name,
+        scriptName,
+      },
     };
   });
+};
+
+export const getRootPackageJson = (rootPath: string) => {
+  const packageJsonPath = join(rootPath, 'package.json');
+
+  if (!existsSync(packageJsonPath)) {
+    return {
+      packageManager: getPackageManager(),
+    };
+  }
+
+  const { packageManager } = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+
+  return {
+    packageManager: getPackageManager(packageManager),
+  };
 };
 
 export const getAllScriptsFromPackageJsons = (rootPath: string): Script[] => {

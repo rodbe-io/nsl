@@ -5,7 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@9.5.0",
   "scripts": {
-    "test-p-1": "echo \"hi parcel one pnpm\"",
+    "test-p-1": "echo \"hi parcel amazing one pnpm\"",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

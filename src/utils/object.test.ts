@@ -47,7 +47,7 @@ describe('getProp', () => {
 describe('fuzzySearch', () => {
   it('should fuzzy search return a object', () => {
     const result = fuzzySearch({ searchText: 'kevin', items: [obj1], key: 'name' });
-    console.log(11, result);
+
     expect(result).toEqual([obj1]);
   });
 
