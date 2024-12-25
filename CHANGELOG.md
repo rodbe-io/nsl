@@ -1,3 +1,10 @@
+## [1.17.0](https://github.com/kevinrodbe/nsl/compare/v1.16.0...v1.17.0) (2024-12-25)
+
+
+### Features
+
+* get pkgJsonRoot ([516917d](https://github.com/kevinrodbe/nsl/commit/516917dda0ceab081fff7b8293874f0bc7b93473))
+
 ## [1.16.0](https://github.com/kevinrodbe/nsl/compare/v1.15.0...v1.16.0) (2024-12-16)
 
 
