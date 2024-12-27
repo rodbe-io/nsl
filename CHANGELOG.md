@@ -1,3 +1,10 @@
+## [1.19.0](https://github.com/kevinrodbe/nsl/compare/v1.18.0...v1.19.0) (2024-12-27)
+
+
+### Features
+
+* handle exit program ([96e6de5](https://github.com/kevinrodbe/nsl/commit/96e6de56ca894206d8de20e3437940e2c615c2b3))
+
 ## [1.18.0](https://github.com/kevinrodbe/nsl/compare/v1.17.0...v1.18.0) (2024-12-25)
 
 
