@@ -14,6 +14,14 @@ process.stdin.on('keypress', (_, key) => {
   }
 });
 
+process.on('uncaughtException', error => {
+  if (error instanceof Error && error.name === 'ExitPromptError') {
+    console.log('👋 until next time!');
+  } else {
+    throw error;
+  }
+});
+
 const init = async () => {
   const argv = await yargs(hideBin(process.argv))
     .version(false)
