@@ -1,36 +1,7 @@
 {
   "author": "KevinRodbe",
-  "name": "@rodbe/nsl",
-  "version": "1.19.0",
-  "license": "MIT",
-  "engineStrict": true,
-  "homepage": "https://github.com/kevinrodbe/nsl",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kevinrodbe/nsl.git"
-  },
-  "packageManager": "pnpm@9.5.0",
-  "engines": {
-    "node": ">= 18.0.0",
-    "npm": ">= 6.14.16",
-    "pnpm": ">= 9.5.0"
-  },
-  "main": "./dist/index.js",
-  "exports": "./dist/index.js",
-  "type": "module",
-  "files": [
-    "dist"
-  ],
   "bin": {
     "nsl": "./dist/index.js"
-  },
-  "scripts": {
-    "build": "pkgroll",
-    "bump": "semantic-release",
-    "hi": "echo \"hi root\"",
-    "start": "pkgroll --watch",
-    "test": "vitest",
-    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@inquirer/search": "1.0.2",
@@ -60,20 +31,21 @@
     "prettier": "^3.3.3",
     "semantic-release": "20.1.0",
     "typescript": "^5.2.2",
-    "vite": "^5.4.1",
     "vitest": "^2.0.5"
   },
-  "volta": {
-    "node": "18.18.2"
+  "engines": {
+    "node": ">= 18.0.0",
+    "npm": ">= 6.14.16",
+    "pnpm": ">= 9.5.0"
   },
+  "engineStrict": true,
+  "exports": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/kevinrodbe/nsl",
   "imports": {
     "@/*": "./src/*"
-  },
-  "workspaces": [
-    "examples/**"
-  ],
-  "publishConfig": {
-    "access": "public"
   },
   "keywords": [
     "angular",
@@ -105,5 +77,32 @@
     "unix",
     "vue",
     "workflow"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "@rodbe/nsl",
+  "packageManager": "pnpm@9.5.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinrodbe/nsl.git"
+  },
+  "scripts": {
+    "build": "pkgroll",
+    "bump": "semantic-release",
+    "hi": "echo \"hi root\"",
+    "start": "pkgroll --watch",
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "type": "module",
+  "version": "1.19.0",
+  "volta": {
+    "node": "18.18.2"
+  },
+  "workspaces": [
+    "examples/**"
   ]
 }
