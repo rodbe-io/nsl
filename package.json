@@ -91,10 +91,10 @@
   },
   "scripts": {
     "build": "pkgroll",
-    "bump": "semantic-release",
     "hi": "echo \"hi root\"",
+    "release": "semantic-release",
     "start": "pkgroll --watch",
-    "test": "vitest",
+    "test:unit": "vitest run",
     "type-check": "tsc --noEmit"
   },
   "type": "module",
