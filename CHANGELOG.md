@@ -1,3 +1,10 @@
+## [1.20.0](https://github.com/kevinrodbe/nsl/compare/v1.19.0...v1.20.0) (2025-01-05)
+
+
+### Features
+
+* add update param ([648faaa](https://github.com/kevinrodbe/nsl/commit/648faaaa2e1211cec69a60bfe4cf3b3a7a216a64))
+
 ## [1.19.0](https://github.com/kevinrodbe/nsl/compare/v1.18.0...v1.19.0) (2024-12-27)
 
 
