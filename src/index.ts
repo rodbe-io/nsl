@@ -4,7 +4,7 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
 import { getNSLPkgJson } from '@/utils/fs';
-import { checkAvailableUpdate } from './tasks/check-update';
+import { checkAvailableUpdate, update } from './tasks/update';
 import { aboutNSL } from './tasks/get-info';
 import { execScript } from './tasks/exec-script';
 
@@ -29,11 +29,17 @@ const init = async () => {
       all: { alias: 'a', type: 'boolean', default: false },
       debug: { alias: 'd', type: 'boolean', default: false },
       info: { alias: 'i', type: 'boolean', default: false },
-      version: { alias: 'v', type: 'boolean', default: false },
       print: { alias: 'p', type: 'boolean', default: false },
+      update: { alias: 'u', type: 'boolean', default: false },
+      version: { alias: 'v', type: 'boolean', default: false },
     }).argv;
 
   await checkAvailableUpdate();
+
+  if (argv.update) {
+    await update();
+    process.exit(0);
+  }
 
   if (argv.info) {
     aboutNSL(argv);

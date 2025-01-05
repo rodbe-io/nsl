@@ -28,6 +28,7 @@ nsl
 | --info    | -i    | get all info tech for debugging |                                          |
 | --version | -v    | get current version             |                                          |
 | --print   | -p    | print the selected script       | no exec the script, just print it        |
+| --update  | -u    | update to last version          | if exists, update to last version        |
 
 ## Configuration file
 
