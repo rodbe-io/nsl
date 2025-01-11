@@ -1,3 +1,10 @@
+## [1.23.0](https://github.com/kevinrodbe/nsl/compare/v1.22.0...v1.23.0) (2025-01-11)
+
+
+### Features
+
+* use node-fetch to get remote nsl version ([cd21abf](https://github.com/kevinrodbe/nsl/commit/cd21abf4e5b7a6e6c08a935507cbcc2996ee6026))
+
 ## [1.22.0](https://github.com/kevinrodbe/nsl/compare/v1.21.0...v1.22.0) (2025-01-11)
 
 
