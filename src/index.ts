@@ -7,6 +7,7 @@ import { getNslPkgJson } from '@/helpers/nsl';
 import { checkAvailableUpdate, update } from './tasks/update';
 import { aboutNSL } from './tasks/get-info';
 import { execScript } from './tasks/exec-script';
+import { isSupportedNodeVersion } from './tasks/get-node-version';
 
 process.stdin.on('keypress', (_, key) => {
   if (key && key.name === 'escape') {
@@ -34,7 +35,9 @@ const init = async () => {
       version: { alias: 'v', type: 'boolean', default: false },
     }).argv;
 
-  await checkAvailableUpdate();
+  if (isSupportedNodeVersion()) {
+    await checkAvailableUpdate();
+  }
 
   if (argv.update) {
     await update();
