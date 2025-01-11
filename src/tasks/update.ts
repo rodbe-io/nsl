@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process';
 
-import pkgJson from 'package-json';
 import select from '@inquirer/select';
+import fetch from 'node-fetch';
 
 import { cacheFactory } from '@/adapters/cache';
 import { SHORT_CONFIG_CACHE_NAME, LONG_CONFIG_CACHE_NAME, STATUS, DAY_IN_MS, WEEK_IN_MS } from '@/constants';
@@ -36,6 +36,19 @@ const longConfigCache = cacheFactory<string, any>({
   cacheName: LONG_CONFIG_CACHE_NAME,
 });
 
+type NpmPackage = {
+  'dist-tags': {
+    latest: string;
+  };
+};
+
+const getRemotePackageJson = async (packageName: string) => {
+  const response = (await fetch(`https://registry.npmjs.org/${packageName}`).then(res => res.json())) as NpmPackage;
+  const version = response['dist-tags'].latest;
+
+  return { version };
+};
+
 export const update = async () => {
   execSync(commandToInstallNsl, {
     cwd: process.cwd(),
@@ -55,7 +68,7 @@ export const checkAvailableUpdate = async () => {
     return;
   }
 
-  const remotePkgJson = await pkgJson(getNslPkgJson().name);
+  const remotePkgJson = await getRemotePackageJson(getNslPkgJson().name);
 
   if (remotePkgJson.version === getNslPkgJson().version) {
     longConfigCache.setCache('status', STATUS.UPDATED);
