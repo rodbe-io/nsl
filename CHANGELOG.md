@@ -1,3 +1,10 @@
+## [1.21.0](https://github.com/kevinrodbe/nsl/compare/v1.20.0...v1.21.0) (2025-01-11)
+
+
+### Features
+
+* get arch with support for nodejs 14 ([084dbd8](https://github.com/kevinrodbe/nsl/commit/084dbd8e134811cb3756c1e6ac90f40add1d5ed9))
+
 ## [1.20.0](https://github.com/kevinrodbe/nsl/compare/v1.19.0...v1.20.0) (2025-01-05)
 
 
