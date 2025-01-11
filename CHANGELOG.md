@@ -1,3 +1,10 @@
+## [1.22.0](https://github.com/kevinrodbe/nsl/compare/v1.21.0...v1.22.0) (2025-01-11)
+
+
+### Features
+
+* validation node version for updates ([9229684](https://github.com/kevinrodbe/nsl/commit/92296847514262cdf2ee42efc288ec38f5990dc4))
+
 ## [1.21.0](https://github.com/kevinrodbe/nsl/compare/v1.20.0...v1.21.0) (2025-01-11)
 
 
