@@ -1,5 +1,3 @@
-export const DEFAULT_RUNNER = 'npm';
-
 export const PAGE_SIZE = 20;
 
 export const FOLDERS_TO_IGNORE = [

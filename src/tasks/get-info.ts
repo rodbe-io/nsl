@@ -4,7 +4,7 @@ import { homedir, machine, platform } from 'node:os';
 
 import { LONG_CONFIG_CACHE_NAME, RERUN_CACHE_NAME, SHORT_CONFIG_CACHE_NAME } from '@/constants';
 import { getCacheFilePath } from '@/adapters/cache';
-import { getNSLPkgJson, getNSLDistPath } from '@/utils/fs';
+import { getNslPkgJson, getNSLDistPath } from '@/helpers/nsl';
 import { logNslBanner } from '@/helpers/log';
 import { getConfigFilePath } from './get-config';
 
@@ -16,7 +16,7 @@ export const aboutNSL = (argv: Record<string, any>) => {
 
   logNslBanner();
 
-  console.log(chalk.black.bold.bgGreenBright('Current version ->'), getNSLPkgJson().version);
+  console.log(chalk.black.bold.bgGreenBright('Current version ->'), getNslPkgJson().version);
   console.log(chalk.black.bold.bgGreenBright('NSL directory ->'), getNSLDistPath());
   console.log(chalk.black.bold.bgGreenBright('ConfigFilePath ->'), getConfigFilePath(cwd, { debug: true }));
   console.log(chalk.black.bold.bgGreenBright('Arguments ->'), JSON.stringify(argv));

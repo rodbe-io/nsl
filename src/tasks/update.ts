@@ -5,7 +5,7 @@ import select from '@inquirer/select';
 
 import { cacheFactory } from '@/adapters/cache';
 import { SHORT_CONFIG_CACHE_NAME, LONG_CONFIG_CACHE_NAME, STATUS, DAY_IN_MS, WEEK_IN_MS } from '@/constants';
-import { getNSLPkgJson } from '@/utils/fs';
+import { getNslPkgJson } from '@/helpers/nsl';
 import { logNslBanner } from '@/helpers/log';
 
 const updateOptions = {
@@ -55,9 +55,9 @@ export const checkAvailableUpdate = async () => {
     return;
   }
 
-  const remotePkgJson = await pkgJson(getNSLPkgJson().name);
+  const remotePkgJson = await pkgJson(getNslPkgJson().name);
 
-  if (remotePkgJson.version === getNSLPkgJson().version) {
+  if (remotePkgJson.version === getNslPkgJson().version) {
     longConfigCache.setCache('status', STATUS.UPDATED);
     return;
   }

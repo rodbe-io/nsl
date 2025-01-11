@@ -1,4 +1,4 @@
-import { DEFAULT_RUNNER } from '@/constants';
+const DEFAULT_RUNNER = 'npm';
 
 export const getPackageManager = (packageManager?: string) => {
   if (!packageManager) {
