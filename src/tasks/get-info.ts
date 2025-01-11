@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { execSync } from 'node:child_process';
-import { homedir, machine, platform } from 'node:os';
+import { homedir, platform } from 'node:os';
+import { arch } from 'node:process';
 
 import { LONG_CONFIG_CACHE_NAME, RERUN_CACHE_NAME, SHORT_CONFIG_CACHE_NAME } from '@/constants';
 import { getCacheFilePath } from '@/adapters/cache';
@@ -21,7 +22,7 @@ export const aboutNSL = (argv: Record<string, any>) => {
   console.log(chalk.black.bold.bgGreenBright('ConfigFilePath ->'), getConfigFilePath(cwd, { debug: true }));
   console.log(chalk.black.bold.bgGreenBright('Arguments ->'), JSON.stringify(argv));
   console.log(chalk.black.bold.bgGreenBright('Home ->'), homedir());
-  console.log(chalk.black.bold.bgGreenBright('Machine ->'), machine());
+  console.log(chalk.black.bold.bgGreenBright('Machine ->'), arch);
   console.log(chalk.black.bold.bgGreenBright('Platform ->'), platform());
   console.log(chalk.black.bold.bgGreenBright('rerunCachePath ->'), rerunCachePath);
   console.log(chalk.black.bold.bgGreenBright('shortConfigCachePath ->'), shortConfigCachePath);
