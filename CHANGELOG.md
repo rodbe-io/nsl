@@ -1,3 +1,10 @@
+## [1.25.0](https://github.com/kevinrodbe/nsl/compare/v1.24.0...v1.25.0) (2025-01-12)
+
+
+### Features
+
+* get utility functions from external package ([2b8c653](https://github.com/kevinrodbe/nsl/commit/2b8c653672e3fad70b7666035d5ae2a9304c2353))
+
 ## [1.24.0](https://github.com/kevinrodbe/nsl/compare/v1.23.1...v1.24.0) (2025-01-12)
 
 
