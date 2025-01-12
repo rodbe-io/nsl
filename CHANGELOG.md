@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/kevinrodbe/nsl/compare/v1.23.0...v1.23.1) (2025-01-12)
+
+
+### Bug Fixes
+
+* remove check for node version ([a9a7159](https://github.com/kevinrodbe/nsl/commit/a9a71597163c8902ae69f10b892421f4638e1e35))
+
 ## [1.23.0](https://github.com/kevinrodbe/nsl/compare/v1.22.0...v1.23.0) (2025-01-11)
 
 
