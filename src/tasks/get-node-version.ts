@@ -2,7 +2,7 @@ import { version } from 'node:process';
 
 const MIN_NODE_VERSION = 18;
 
-const getNodeVersion = () => {
+export const getNodeVersion = () => {
   const nodeVersion = version.replace('v', '');
   const [major, minor, patch] = nodeVersion.split('.');
 

@@ -34,8 +34,6 @@ const init = async () => {
       version: { alias: 'v', type: 'boolean', default: false },
     }).argv;
 
-  await checkAvailableUpdate();
-
   if (argv.update) {
     await update();
     process.exit(0);
@@ -45,11 +43,13 @@ const init = async () => {
     aboutNSL(argv);
     process.exit(0);
   }
+
   if (argv.version) {
     console.log(getNslPkgJson().version);
     process.exit(0);
   }
 
+  await checkAvailableUpdate();
   await execScript(argv);
 };
 

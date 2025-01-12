@@ -1,13 +1,14 @@
-import chalk from 'chalk';
-import { execSync } from 'node:child_process';
 import { homedir, platform } from 'node:os';
 import { arch } from 'node:process';
+
+import chalk from 'chalk';
 
 import { LONG_CONFIG_CACHE_NAME, RERUN_CACHE_NAME, SHORT_CONFIG_CACHE_NAME } from '@/constants';
 import { getCacheFilePath } from '@/adapters/cache';
 import { getNslPkgJson, getNSLDistPath } from '@/helpers/nsl';
 import { logNslBanner } from '@/helpers/log';
 import { getConfigFilePath } from './get-config';
+import { getNodeVersion } from './get-node-version';
 
 export const aboutNSL = (argv: Record<string, any>) => {
   const cwd = process.cwd();
@@ -27,6 +28,5 @@ export const aboutNSL = (argv: Record<string, any>) => {
   console.log(chalk.black.bold.bgGreenBright('rerunCachePath ->'), rerunCachePath);
   console.log(chalk.black.bold.bgGreenBright('shortConfigCachePath ->'), shortConfigCachePath);
   console.log(chalk.black.bold.bgGreenBright('longConfigCachePath ->'), longConfigCachePath);
-
-  execSync('node -v', { cwd, stdio: [process.stdin, process.stdout, process.stderr] });
+  console.log(chalk.black.bold.bgGreenBright('NodeJS ->'), getNodeVersion().version);
 };
