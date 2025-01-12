@@ -1,9 +1,10 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
+import { isEmptyObj } from '@rodbe/fn-utils';
+
 import type { Script } from '@/models/script.types';
 import { FOLDERS_TO_IGNORE } from '@/constants';
-import { isEmptyObj } from './predicates';
 import { getPackageManager } from './node';
 
 export const readJsonFile = (filePath: string) => {

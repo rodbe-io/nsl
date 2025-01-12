@@ -1,6 +1,8 @@
-import search from '@inquirer/search';
 import { execSync } from 'node:child_process';
+
+import search from '@inquirer/search';
 import chalk from 'chalk';
+import { compose, fuzzySearch } from '@rodbe/fn-utils';
 
 import {
   groupScriptsByFolder,
@@ -9,8 +11,6 @@ import {
   type GroupedScriptTable,
 } from '@/mapper';
 import { getAllScriptsFromPackageJsons, getRootPackageJson } from '@/utils/fs';
-import { fuzzySearch } from '@/utils/object';
-import { compose } from '@/utils/fp';
 import { NPM_SCRIPTS_TO_IGNORE, PAGE_SIZE, QUATER_IN_MS, RERUN_CACHE_NAME } from '@/constants';
 import { cacheFactory } from '@/adapters/cache';
 import type { Config, ExecScriptParams, Script } from '@/models/script.types';

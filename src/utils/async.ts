@@ -1,4 +1,4 @@
-import { isObject } from './predicates';
+import { isObject } from '@rodbe/fn-utils';
 
 export const to = async <T, E>(
   promise: Promise<T>,
