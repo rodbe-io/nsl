@@ -1,3 +1,10 @@
+## [1.24.0](https://github.com/kevinrodbe/nsl/compare/v1.23.1...v1.24.0) (2025-01-12)
+
+
+### Features
+
+* check new nsl version ([e009809](https://github.com/kevinrodbe/nsl/commit/e00980949ca0ab675a2f331c8c42585517a94542))
+
 ## [1.23.1](https://github.com/kevinrodbe/nsl/compare/v1.23.0...v1.23.1) (2025-01-12)
 
 
