@@ -2,6 +2,7 @@ import { execSync } from 'node:child_process';
 
 import chalk from 'chalk';
 import fetch from 'node-fetch';
+import { to } from '@rodbe/fn-utils';
 
 import { cacheFactory } from '@/adapters/cache';
 import { SHORT_CONFIG_CACHE_NAME, STATUS, DAY_IN_MS } from '@/constants';
@@ -22,7 +23,14 @@ type NpmPackage = {
 };
 
 const getRemotePackageJson = async (packageName: string) => {
-  const response = (await fetch(`https://registry.npmjs.org/${packageName}`).then(res => res.json())) as NpmPackage;
+  const [err, response] = await to<NpmPackage>(
+    fetch(`https://registry.npmjs.org/${packageName}`).then(res => res.json() as Promise<NpmPackage>)
+  );
+
+  if (err) {
+    return null;
+  }
+
   const version = response['dist-tags'].latest;
 
   return { version };
@@ -43,6 +51,10 @@ export const checkAvailableUpdate = async () => {
   }
 
   const remotePkgJson = await getRemotePackageJson(getNslPkgJson().name);
+  if (!remotePkgJson) {
+    return;
+  }
+
   if (remotePkgJson.version === getNslPkgJson().version) {
     shortConfigCache.setCache('status', STATUS.UPDATED);
 

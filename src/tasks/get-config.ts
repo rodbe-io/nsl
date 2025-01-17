@@ -1,9 +1,10 @@
 import { extname, join, parse } from 'node:path';
 import { existsSync } from 'node:fs';
 
+import { to } from '@rodbe/fn-utils';
+
 import { CONFIG_FILES } from '@/constants';
 import { readJsonFile } from '@/utils/fs';
-import { to } from '@/utils/async';
 import type { Config, ExecScriptParams } from '@/models/script.types';
 
 export const getConfigFilePath = (rootPath: string, argv?: ExecScriptParams) => {
@@ -41,12 +42,11 @@ export const getConfig = async (rootPath: string, argv?: ExecScriptParams): Prom
 
   const extFile = extname(configFilePath);
   if (extFile === '.js') {
-    const [err, config] = await to(
-      import(configFilePath),
-      `${configFilePath} module is not defined as ES module. Exports an object using export default`
-    );
+    const [err, config] = await to(import(configFilePath), {
+      msg: `${configFilePath} module is not defined as ES module. Exports an object using export default`,
+    });
     if (err) {
-      console.log(err.errInfo);
+      console.log(err.msg);
       return null;
     }
 
