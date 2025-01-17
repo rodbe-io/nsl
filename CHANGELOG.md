@@ -1,3 +1,11 @@
+## [1.25.1](https://github.com/rodbe-io/nsl/compare/v1.25.0...v1.25.1) (2025-01-17)
+
+
+### Bug Fixes
+
+* check new version when is offlinet ([9dea3e3](https://github.com/rodbe-io/nsl/commit/9dea3e381b718e542ebe49ec1d270d1482a6cebc))
+* unit-test ([fcdf238](https://github.com/rodbe-io/nsl/commit/fcdf238db5e2dc61eb7d026f7f498b10d2b2fbb8))
+
 ## [1.25.0](https://github.com/kevinrodbe/nsl/compare/v1.24.0...v1.25.0) (2025-01-12)
 
 

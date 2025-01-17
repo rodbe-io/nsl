@@ -100,7 +100,7 @@
     "type-check": "tsc --noEmit"
   },
   "type": "module",
-  "version": "1.25.0",
+  "version": "1.25.1",
   "volta": {
     "node": "18.18.2"
   },
