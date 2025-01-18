@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-import process from 'node:process';
-
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
@@ -9,20 +7,9 @@ import { getNslPkgJson } from '@/helpers/nsl';
 import { checkAvailableUpdate, update } from '@/tasks/update';
 import { aboutNSL } from '@/tasks/get-info';
 import { execScript } from '@/tasks/exec-script';
+import { initEvents } from '@/events';
 
-process.stdin.on('keypress', (_, key) => {
-  if (key && key.name === 'escape') {
-    process.exit(0);
-  }
-});
-
-process.on('uncaughtException', error => {
-  if (error instanceof Error && error.name === 'ExitPromptError') {
-    console.log('👋 until next time!');
-  } else {
-    throw error;
-  }
-});
+initEvents();
 
 const init = async () => {
   const argv = await yargs(hideBin(process.argv))
