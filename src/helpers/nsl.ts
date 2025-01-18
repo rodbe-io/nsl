@@ -10,7 +10,7 @@ export const getNSLDistPath = () => {
 
 export const getNslPkgJson = () => {
   const distPath = getNSLDistPath();
-  const folderParent = join(distPath, '..');
+  const folderParent = join(distPath, '..', '..');
   const pkgJsonPath = join(folderParent, 'package.json');
 
   return JSON.parse(readFileSync(pkgJsonPath, 'utf8'));

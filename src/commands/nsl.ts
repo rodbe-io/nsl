@@ -6,9 +6,9 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
 import { getNslPkgJson } from '@/helpers/nsl';
-import { checkAvailableUpdate, update } from './tasks/update';
-import { aboutNSL } from './tasks/get-info';
-import { execScript } from './tasks/exec-script';
+import { checkAvailableUpdate, update } from '@/tasks/update';
+import { aboutNSL } from '@/tasks/get-info';
+import { execScript } from '@/tasks/exec-script';
 
 process.stdin.on('keypress', (_, key) => {
   if (key && key.name === 'escape') {

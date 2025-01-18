@@ -1,7 +1,7 @@
 {
   "author": "KevinRodbe",
   "bin": {
-    "nsl": "./dist/index.js"
+    "nsl": "./dist/commands/nsl.js"
   },
   "dependencies": {
     "@inquirer/search": "1.0.2",
@@ -39,11 +39,6 @@
     "pnpm": ">= 9.5.0"
   },
   "engineStrict": true,
-  "exports": {
-    ".": {
-      "import": "./dist/index.js"
-    }
-  },
   "files": [
     "dist"
   ],
@@ -80,7 +75,6 @@
     "workflow"
   ],
   "license": "MIT",
-  "main": "./dist/index.js",
   "name": "@rodbe/nsl",
   "packageManager": "pnpm@9.5.0",
   "publishConfig": {
