@@ -15,8 +15,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       '@rodbe/get-package-jsons':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       chalk:
         specifier: ^5.3.0
         version: 5.4.1
@@ -546,8 +546,8 @@ packages:
     resolution: {integrity: sha512-5GOJ6Al7VUHDd5HZySmBn9eltsp2rfCLXkr26DUTnaGCWh2YTE/WkjqKrUp0xtqmiD6Qp7D6PIt+ALnL/LtpQg==}
     engines: {node: '>= 18.18.2', npm: '>= 8.11.0', pnpm: '>= 9.15.2'}
 
-  '@rodbe/get-package-jsons@2.0.0':
-    resolution: {integrity: sha512-DjdeMeJZinAJVzbpC3bEL07yWo1SxxjhWsUeZViq757kxGDAzxAR2fGbmD5kZSq5HpDTxeDU+YQMs4FRFwE3IA==}
+  '@rodbe/get-package-jsons@2.0.1':
+    resolution: {integrity: sha512-/kRd02E4AeH430YpoiPhT40q2aNnilD8WZ/ZbBtYxe+4pfO1EzkNoHyLOyBtzucD51/q0UzIXqQ84NlekC74iw==}
     engines: {node: '>= 18.18.2', npm: '>= 8.11.0', pnpm: '>= 9.15.2'}
 
   '@rollup/plugin-alias@5.1.1':
@@ -2955,7 +2955,7 @@ snapshots:
 
   '@rodbe/fn-utils@1.5.0': {}
 
-  '@rodbe/get-package-jsons@2.0.0':
+  '@rodbe/get-package-jsons@2.0.1':
     dependencies:
       '@rodbe/fn-utils': 1.5.0
 
