@@ -1,41 +1,32 @@
 import table from 'text-table';
 import { Separator } from '@inquirer/search';
 import chalk from 'chalk';
+import type { NormalizedScripts, Script } from '@rodbe/get-package-jsons';
 
-import type { Script, ScriptTable } from '@/models/script.types';
-
-type GroupedScript = {
-  [key: string]: Script[];
-};
-export const groupScriptsByFolder = (scripts: Script[]): GroupedScript => {
-  return scripts.reduce<GroupedScript>((acc, curr) => {
-    const { folderContainer } = curr.value;
-
-    if (!acc[folderContainer]) {
-      acc[folderContainer] = [curr];
-    } else {
-      acc[folderContainer].push(curr);
-    }
-
-    return acc;
-  }, {});
-};
+import type { ScriptForInquirer } from './models/script.types';
 
 const scriptToRowTable = (script: Script): [string, string, string] => {
-  return [script.value.scriptName, '>', script.value.contentScript];
+  return [script.scriptName, '>', script.scriptContent];
 };
 
-export type GroupedScriptTable = {
-  [key: string]: ScriptTable[];
+export type GroupedScriptsTable = {
+  [key: string]: ScriptForInquirer[];
 };
-export const groupedScriptsWithTableProp = (groupedScripts: GroupedScript): GroupedScriptTable => {
-  return Object.entries(groupedScripts).reduce<GroupedScriptTable>((acc, [folderContainer, currentScripts]) => {
-    const scriptsWithRowFormat = table(currentScripts.map(scriptToRowTable), { align: ['r', 'c', 'l'] }).split('\n');
+export const getGroupedScriptsWithTableProp = (packageJsons: NormalizedScripts): GroupedScriptsTable => {
+  return Object.entries(packageJsons).reduce<GroupedScriptsTable>((acc, [folderContainer, packageJson]) => {
+    const { scripts = [], packageManager, packageName } = packageJson;
+    const scriptsWithRowFormat = table(scripts.map(scriptToRowTable), { align: ['r', 'c', 'l'] }).split('\n');
 
-    acc[folderContainer] = currentScripts.map((script, idx) => {
+    acc[folderContainer] = scripts.map<ScriptForInquirer>(({ scriptContent, scriptName }, idx) => {
       return {
         name: scriptsWithRowFormat[idx] as string,
-        ...script,
+        value: {
+          folderContainer,
+          packageManager,
+          packageName,
+          scriptContent,
+          scriptName,
+        },
       };
     });
 
@@ -43,11 +34,12 @@ export const groupedScriptsWithTableProp = (groupedScripts: GroupedScript): Grou
   }, {});
 };
 
-export type GroupedScriptInquirerFormat = Array<ScriptTable | Separator>;
+export type GroupedScriptsInquirerFormat = Array<ScriptForInquirer | Separator>;
+
 export const getGroupedScriptsWithInquirerFormat = (
-  groupedScripts: GroupedScriptTable
-): GroupedScriptInquirerFormat => {
-  return Object.entries(groupedScripts).reduce<GroupedScriptInquirerFormat>(
+  groupedScripts: GroupedScriptsTable
+): GroupedScriptsInquirerFormat => {
+  return Object.entries(groupedScripts).reduce<GroupedScriptsInquirerFormat>(
     (acc, [folderContainer, currentScripts], idx) => {
       if (!currentScripts.length) {
         return acc;

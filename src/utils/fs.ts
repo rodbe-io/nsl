@@ -1,11 +1,6 @@
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { readFileSync } from 'node:fs';
 
-import { isEmptyObj } from '@rodbe/fn-utils';
-
-import type { Script } from '@/models/script.types';
-import { FOLDERS_TO_IGNORE } from '@/constants';
-import { getPackageManager } from './node';
+import { getAllPackageJsons } from '@rodbe/get-package-jsons';
 
 export const readJsonFile = (filePath: string) => {
   try {
@@ -17,81 +12,13 @@ export const readJsonFile = (filePath: string) => {
   }
 };
 
-type FindPackageJsonFilesProps = {
-  absolutePath: string;
-  fileListAccumulator?: string[];
-};
+export const getAllScriptsFromPackageJsons = (rootPath: string) => {
+  const packageJsons = getAllPackageJsons({ cwd: rootPath });
 
-const findPackageJsonFiles = ({ absolutePath, fileListAccumulator }: FindPackageJsonFilesProps) => {
-  let fileList = fileListAccumulator || [];
-  const filesAndFolderNames = readdirSync(absolutePath);
-  const filteredLs = filesAndFolderNames.filter(fileOrFolderName => !FOLDERS_TO_IGNORE.includes(fileOrFolderName));
-
-  filteredLs.forEach(fileOrFolderName => {
-    const filePath = join(absolutePath, fileOrFolderName);
-    if (statSync(filePath, { throwIfNoEntry: false })?.isDirectory()) {
-      fileList = findPackageJsonFiles({ absolutePath: filePath, fileListAccumulator: fileList });
-    } else if (fileOrFolderName === 'package.json') {
-      fileList.push(filePath);
-    }
-  });
-
-  return fileList;
-};
-
-const getScriptsFromPackageJson = (pkgPath: string): Script[] => {
-  const packageJson = JSON.parse(readFileSync(pkgPath, 'utf8'));
-  const scripts: Record<string, string> = packageJson.scripts;
-  const { packageManager, name } = packageJson;
-
-  if (isEmptyObj(scripts)) {
-    return [];
-  }
-
-  return Object.entries(scripts).map<Script>(([scriptName, contentScript]) => {
-    const folderContainer =
-      pkgPath
-        .replace(process.cwd(), '')
-        .replace('package.json', '')
-        .replace(/^\/|\/$/g, '') || 'Root';
-
-    return {
-      value: {
-        contentScript,
-        folderContainer,
-        packageManager,
-        packageName: name,
-        scriptName,
-      },
-    };
-  });
-};
-
-export const getRootPackageJson = (rootPath: string) => {
-  const packageJsonPath = join(rootPath, 'package.json');
-
-  if (!existsSync(packageJsonPath)) {
-    return {
-      packageManager: getPackageManager(),
-    };
-  }
-
-  const { packageManager } = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
-
-  return {
-    packageManager: getPackageManager(packageManager),
-  };
-};
-
-export const getAllScriptsFromPackageJsons = (rootPath: string): Script[] => {
-  const packageJsonPaths = findPackageJsonFiles({ absolutePath: rootPath });
-
-  if (packageJsonPaths.length === 0) {
+  if (!packageJsons) {
     console.log('No package.json files found.');
     process.exit(1);
   }
 
-  return packageJsonPaths.flatMap(pkgPath => {
-    return getScriptsFromPackageJson(pkgPath);
-  });
+  return packageJsons;
 };

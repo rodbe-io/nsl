@@ -3,44 +3,55 @@ import { execSync } from 'node:child_process';
 import search from '@inquirer/search';
 import chalk from 'chalk';
 import { compose, fuzzySearch } from '@rodbe/fn-utils';
+import type { NormalizedScripts } from '@rodbe/get-package-jsons';
 
 import {
-  groupScriptsByFolder,
-  groupedScriptsWithTableProp,
+  getGroupedScriptsWithTableProp,
   getGroupedScriptsWithInquirerFormat,
-  type GroupedScriptTable,
+  type GroupedScriptsTable,
 } from '@/mapper';
-import { getAllScriptsFromPackageJsons, getRootPackageJson } from '@/utils/fs';
+import { getAllScriptsFromPackageJsons } from '@/utils/fs';
 import { NPM_SCRIPTS_TO_IGNORE, PAGE_SIZE, QUATER_IN_MS, RERUN_CACHE_NAME } from '@/constants';
 import { cacheFactory } from '@/adapters/cache';
-import type { Config, ExecScriptParams, Script } from '@/models/script.types';
+import type { Config, ExecScriptParams, ScriptForInquirer } from '@/models/script.types';
 import { getConfig } from './get-config';
 import { getCommandToRun } from '@/helpers/node';
 
-const filterScripts = (all?: boolean) => (config: Config | null) => (scripts: Script[]) => {
+const filterScripts = (all?: boolean) => (config: Config | null) => (packageJsons: NormalizedScripts) => {
   if (all) {
-    return scripts;
+    return packageJsons;
   }
 
-  return scripts.filter(script => {
-    const scriptsToIgnore = NPM_SCRIPTS_TO_IGNORE.concat(config?.ignoreScripts || []);
+  const scriptsToIgnore = NPM_SCRIPTS_TO_IGNORE.concat(config?.ignoreScripts || []);
 
-    return !scriptsToIgnore.includes(script.value.scriptName);
-  });
+  return Object.entries(packageJsons).reduce<NormalizedScripts>((acc, [folderContainer, packageJson]) => {
+    const scripts = packageJson.scripts;
+
+    if (!scripts) {
+      acc[folderContainer] = packageJson;
+
+      return acc;
+    }
+
+    const filteredScripts = scripts.filter(script => !scriptsToIgnore.includes(script.scriptName));
+    acc[folderContainer] = { ...packageJson, scripts: filteredScripts };
+
+    return acc;
+  }, {});
 };
 
 export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
   const cwd = process.cwd();
-  const { setCache } = cacheFactory<Script['value'], any>({
+  const { setCache } = cacheFactory<ScriptForInquirer['value'], any>({
     max: 5,
     ttl: QUATER_IN_MS,
     cacheName: RERUN_CACHE_NAME,
   });
   const config = await getConfig(cwd, { debug });
-  const groupedScripts = compose(groupScriptsByFolder, filterScripts(all)(config), getAllScriptsFromPackageJsons)(cwd);
-  const groupedScriptsWithTable = groupedScriptsWithTableProp(groupedScripts);
+  const groupedScripts = compose(filterScripts(all)(config), getAllScriptsFromPackageJsons)(cwd);
+  const groupedScriptsWithTable = getGroupedScriptsWithTableProp(groupedScripts);
   const groupedScriptsWithInquirerFormat = getGroupedScriptsWithInquirerFormat(groupedScriptsWithTable);
-  const rootPkgJson = getRootPackageJson(cwd);
+  const rootPackageJson = groupedScripts?.Root;
 
   const answer = await search({
     message: 'Select or search a script to run:',
@@ -50,7 +61,7 @@ export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
         return groupedScriptsWithInquirerFormat;
       }
 
-      const filtered = Object.entries(groupedScriptsWithTable).reduce<GroupedScriptTable>(
+      const filtered = Object.entries(groupedScriptsWithTable).reduce<GroupedScriptsTable>(
         (acc, [folderContainer, currentScripts]) => {
           const filteredScripts = fuzzySearch({ searchText: input, items: currentScripts, key: 'name' });
           acc[folderContainer] = filteredScripts;
@@ -65,7 +76,7 @@ export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
   });
 
   setCache(cwd, answer);
-  const commandToRun = getCommandToRun(answer, rootPkgJson.packageManager);
+  const commandToRun = getCommandToRun(answer, rootPackageJson?.packageManager);
   console.log(chalk.black.bold.bgGreenBright(commandToRun));
 
   if (print) {

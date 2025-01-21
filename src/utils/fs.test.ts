@@ -11,7 +11,7 @@ describe('readJsonFile', () => {
   });
 });
 
-describe('getAllScriptsFromPackageJsons', () => {
+describe('readJsonFile', () => {
   it('should read prop name from package.json', () => {
     const filePath = `${process.cwd()}/package.json`;
     const result = readJsonFile(filePath);
