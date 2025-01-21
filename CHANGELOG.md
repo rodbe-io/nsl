@@ -1,3 +1,10 @@
+## [1.26.0](https://github.com/rodbe-io/nsl/compare/v1.25.1...v1.26.0) (2025-01-21)
+
+
+### Features
+
+* integration with @rodbe/get-package-jsons ([9b832a5](https://github.com/rodbe-io/nsl/commit/9b832a5e1340b14399a6ff5ae407457294931467))
+
 ## [1.25.1](https://github.com/rodbe-io/nsl/compare/v1.25.0...v1.25.1) (2025-01-17)
 
 
