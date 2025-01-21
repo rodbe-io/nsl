@@ -1,3 +1,10 @@
+## [1.26.1](https://github.com/rodbe-io/nsl/compare/v1.26.0...v1.26.1) (2025-01-21)
+
+
+### Bug Fixes
+
+* update dependency for regex ([ba05aee](https://github.com/rodbe-io/nsl/commit/ba05aee86fc81dce70beb845c159e5ab836458db))
+
 ## [1.26.0](https://github.com/rodbe-io/nsl/compare/v1.25.1...v1.26.0) (2025-01-21)
 
 
