@@ -4,6 +4,7 @@ import search from '@inquirer/search';
 import chalk from 'chalk';
 import { compose, fuzzySearch } from '@rodbe/fn-utils';
 import type { NormalizedScripts } from '@rodbe/get-package-jsons';
+import { fsCache } from '@rodbe/lru-cache-fs';
 
 import {
   getGroupedScriptsWithTableProp,
@@ -12,10 +13,10 @@ import {
 } from '@/mapper';
 import { getAllScriptsFromPackageJsons } from '@/utils/fs';
 import { NPM_SCRIPTS_TO_IGNORE, PAGE_SIZE, QUATER_IN_MS, RERUN_CACHE_NAME } from '@/constants';
-import { cacheFactory } from '@/adapters/cache';
 import type { Config, ExecScriptParams, ScriptForInquirer } from '@/models/script.types';
 import { getConfig } from './get-config';
 import { getCommandToRun } from '@/helpers/node';
+import { nslCachePath } from '@/helpers/nsl';
 
 const filterScripts = (all?: boolean) => (config: Config | null) => (packageJsons: NormalizedScripts) => {
   if (all) {
@@ -42,10 +43,11 @@ const filterScripts = (all?: boolean) => (config: Config | null) => (packageJson
 
 export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
   const cwd = process.cwd();
-  const { setCache } = cacheFactory<ScriptForInquirer['value'], any>({
+  const { syncFs } = fsCache<string, ScriptForInquirer['value'], any>({
+    cacheName: RERUN_CACHE_NAME,
+    cachePath: nslCachePath,
     max: 5,
     ttl: QUATER_IN_MS,
-    cacheName: RERUN_CACHE_NAME,
   });
   const config = await getConfig(cwd, { debug });
   const groupedScripts = compose(filterScripts(all)(config), getAllScriptsFromPackageJsons)(cwd);
@@ -75,7 +77,7 @@ export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
     },
   });
 
-  setCache(cwd, answer);
+  syncFs.setItem(cwd, answer);
   const commandToRun = getCommandToRun(answer, rootPackageJson?.packageManager);
   console.log(chalk.black.bold.bgGreenBright(commandToRun));
 

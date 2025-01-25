@@ -3,17 +3,18 @@ import { execSync } from 'node:child_process';
 import chalk from 'chalk';
 import fetch from 'node-fetch';
 import { to } from '@rodbe/fn-utils';
+import { fsCache } from '@rodbe/lru-cache-fs';
 
-import { cacheFactory } from '@/adapters/cache';
 import { SHORT_CONFIG_CACHE_NAME, STATUS, DAY_IN_MS } from '@/constants';
-import { getNslPkgJson } from '@/helpers/nsl';
+import { getNslPkgJson, nslCachePath } from '@/helpers/nsl';
 
 const commandToInstallNsl = 'npm i -g @rodbe/nsl';
 
-const shortConfigCache = cacheFactory<string, any>({
+const shortConfigCache = fsCache<string, any, any>({
+  cacheName: SHORT_CONFIG_CACHE_NAME,
+  cachePath: nslCachePath,
   max: 10,
   ttl: DAY_IN_MS,
-  cacheName: SHORT_CONFIG_CACHE_NAME,
 });
 
 type NpmPackage = {
@@ -42,11 +43,11 @@ export const update = async () => {
     stdio: [process.stdin, process.stdout, process.stderr],
   });
 
-  shortConfigCache.setCache('status', STATUS.UPDATED);
+  shortConfigCache.syncFs.setItem('status', STATUS.UPDATED);
 };
 
 export const checkAvailableUpdate = async () => {
-  if (shortConfigCache.getCache('status') === STATUS.UPDATED) {
+  if (shortConfigCache.get('status') === STATUS.UPDATED) {
     return;
   }
 
@@ -56,12 +57,12 @@ export const checkAvailableUpdate = async () => {
   }
 
   if (remotePkgJson.version === getNslPkgJson().version) {
-    shortConfigCache.setCache('status', STATUS.UPDATED);
+    shortConfigCache.syncFs.setItem('status', STATUS.UPDATED);
 
     return;
   }
 
   console.log(chalk.black.bold.bgGreenBright('Downloading latest version 🔥🔥🔥'));
-  shortConfigCache.deleteCache('status');
+  shortConfigCache.syncFs.removeItem('status');
   await update();
 };
