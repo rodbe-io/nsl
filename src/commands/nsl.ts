@@ -2,12 +2,13 @@
 
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { checkUpdates } from '@rodbe/check-updates';
 
-import { getNslPkgJson } from '@/helpers/nsl';
-import { checkAvailableUpdate, update } from '@/tasks/update';
+import { getNslPkgJson, getNslPkgJsonPath } from '@/helpers/nsl';
 import { aboutNSL } from '@/tasks/get-info';
 import { execScript } from '@/tasks/exec-script';
 import { initEvents } from '@/events';
+import { DAY_IN_MS, WEEK_IN_MS } from '@/constants';
 
 initEvents();
 
@@ -23,8 +24,15 @@ const init = async () => {
       version: { alias: 'v', type: 'boolean', default: false },
     }).argv;
 
+  const { update, checkNewVersion } = checkUpdates({
+    askToUpdate: true,
+    dontAskCheckInterval: DAY_IN_MS,
+    packageJsonPath: getNslPkgJsonPath(),
+    updateCheckInterval: WEEK_IN_MS,
+  });
+
   if (argv.update) {
-    await update();
+    update?.();
     process.exit(0);
   }
 
@@ -38,7 +46,7 @@ const init = async () => {
     process.exit(0);
   }
 
-  await checkAvailableUpdate();
+  await checkNewVersion?.();
   await execScript(argv);
 };
 

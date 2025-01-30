@@ -13,10 +13,8 @@ export const getNSLDistPath = () => {
   return dirname(filename);
 };
 
-export const getNslPkgJson = () => {
-  const distPath = getNSLDistPath();
-  const folderParent = join(distPath, '..', '..');
-  const pkgJsonPath = join(folderParent, 'package.json');
+export const getNslPkgJsonPath = () => join(getNSLDistPath(), '..', '..', 'package.json');
 
-  return JSON.parse(readFileSync(pkgJsonPath, 'utf8'));
+export const getNslPkgJson = () => {
+  return JSON.parse(readFileSync(getNslPkgJsonPath(), 'utf8'));
 };
