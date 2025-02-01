@@ -36,6 +36,9 @@ importers:
         specifier: ^17.7.2
         version: 17.7.2
     devDependencies:
+      '@rodbe/prettier-config':
+        specifier: ^1.1.0
+        version: 1.1.0(prettier@3.4.2)
       '@semantic-release/changelog':
         specifier: 6.0.3
         version: 6.0.3(semantic-release@20.1.0(typescript@5.7.3))
@@ -431,6 +434,12 @@ packages:
   '@rodbe/lru-cache-fs@1.1.2':
     resolution: {integrity: sha512-C7R3eqR5IyJP4mU6XQUItXooN83OqWtJn1TyBR4G6Z/n4JQ3iaKeTX1Ru884vKXUxgrdSTwNOPU9VWrzaija0w==}
     engines: {node: '>= 18.18.2', npm: '>= 8.11.0', pnpm: '>= 9.15.2'}
+
+  '@rodbe/prettier-config@1.1.0':
+    resolution: {integrity: sha512-c1LZr/ITwFJOTlBg8MuWsx8h5gBMOD7Cl8Aum0SGVvmV8SYghfLhC1g++SsrjJJ5l5COX2MM3l6IXsH67Ab8gg==}
+    engines: {node: '>= 18.18.2', npm: '>= 8.11.0', pnpm: '>= 9.15.2'}
+    peerDependencies:
+      prettier: '>=3.0.0'
 
   '@rollup/plugin-alias@5.1.1':
     resolution: {integrity: sha512-PR9zDb+rOzkRb2VD+EuKB7UC41vU5DIwZ5qqCpk0KJudcWAyi8rvYOhS7+L5aZCspw1stTViLgN5v6FF1p5cgQ==}
@@ -2828,6 +2837,10 @@ snapshots:
   '@rodbe/lru-cache-fs@1.1.2':
     dependencies:
       lru-cache: 11.0.2
+
+  '@rodbe/prettier-config@1.1.0(prettier@3.4.2)':
+    dependencies:
+      prettier: 3.4.2
 
   '@rollup/plugin-alias@5.1.1(rollup@4.32.0)':
     optionalDependencies:

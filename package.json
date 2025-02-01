@@ -15,6 +15,7 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "@rodbe/prettier-config": "^1.1.0",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/commit-analyzer": "^9.0.2",
     "@semantic-release/git": "10.0.1",
