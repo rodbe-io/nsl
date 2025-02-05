@@ -3,6 +3,10 @@ List, fuzzy search and run scripts from any type of project
 
 > Easy and fast way to run npm scripts  🚀
 
+## Prerequisites
+
+- **Node.js 18.18.2 or higher**
+
 ## Install ⚙️
 
 ```bash
