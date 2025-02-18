@@ -1,4 +1,5 @@
 import { execSync } from 'node:child_process';
+import { setTimeout } from 'node:timers/promises';
 
 import search from '@inquirer/search';
 import chalk from 'chalk';
@@ -18,28 +19,36 @@ import { getConfig } from './get-config';
 import { getCommandToRun } from '@/helpers/node';
 import { nslCachePath } from '@/helpers/nsl';
 
-const filterScripts = (all?: boolean) => (config: Config | null) => (packageJsons: NormalizedScripts) => {
-  if (all) {
-    return packageJsons;
-  }
+const DEBOUNCE_TIME = 300;
 
-  const scriptsToIgnore = NPM_SCRIPTS_TO_IGNORE.concat(config?.ignoreScripts || []);
-
-  return Object.entries(packageJsons).reduce<NormalizedScripts>((acc, [folderContainer, packageJson]) => {
-    const scripts = packageJson.scripts;
-
-    if (!scripts) {
-      acc[folderContainer] = packageJson;
-
-      return acc;
+const filterScripts =
+  (all?: boolean) => (config: Config | null) => (packageJsons: NormalizedScripts) => {
+    if (all) {
+      return packageJsons;
     }
 
-    const filteredScripts = scripts.filter(script => !scriptsToIgnore.includes(script.scriptName));
-    acc[folderContainer] = { ...packageJson, scripts: filteredScripts };
+    const scriptsToIgnore = NPM_SCRIPTS_TO_IGNORE.concat(config?.ignoreScripts || []);
 
-    return acc;
-  }, {});
-};
+    return Object.entries(packageJsons).reduce<NormalizedScripts>(
+      (acc, [folderContainer, packageJson]) => {
+        const scripts = packageJson.scripts;
+
+        if (!scripts) {
+          acc[folderContainer] = packageJson;
+
+          return acc;
+        }
+
+        const filteredScripts = scripts.filter(
+          (script) => !scriptsToIgnore.includes(script.scriptName)
+        );
+        acc[folderContainer] = { ...packageJson, scripts: filteredScripts };
+
+        return acc;
+      },
+      {}
+    );
+  };
 
 export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
   const cwd = process.cwd();
@@ -52,20 +61,25 @@ export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
   const config = await getConfig(cwd, { debug });
   const groupedScripts = compose(filterScripts(all)(config), getAllScriptsFromPackageJsons)(cwd);
   const groupedScriptsWithTable = getGroupedScriptsWithTableProp(groupedScripts);
-  const groupedScriptsWithInquirerFormat = getGroupedScriptsWithInquirerFormat(groupedScriptsWithTable);
+  const groupedScriptsWithInquirerFormat =
+    getGroupedScriptsWithInquirerFormat(groupedScriptsWithTable);
   const rootPackageJson = groupedScripts?.Root;
 
   const answer = await search({
     message: 'Select or search a script to run:',
     pageSize: PAGE_SIZE,
-    source: input => {
+    source: async (input) => {
       if (!input) {
         return groupedScriptsWithInquirerFormat;
       }
-
+      await setTimeout(DEBOUNCE_TIME);
       const filtered = Object.entries(groupedScriptsWithTable).reduce<GroupedScriptsTable>(
         (acc, [folderContainer, currentScripts]) => {
-          const filteredScripts = fuzzySearch({ searchText: input, items: currentScripts, key: 'name' });
+          const filteredScripts = fuzzySearch({
+            searchText: input,
+            items: currentScripts,
+            key: 'name',
+          });
           acc[folderContainer] = filteredScripts;
 
           return acc;
