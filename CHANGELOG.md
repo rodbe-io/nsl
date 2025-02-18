@@ -1,3 +1,10 @@
+## [1.27.0](https://github.com/rodbe-io/nsl/compare/v1.26.1...v1.27.0) (2025-02-18)
+
+
+### Features
+
+* add debounce to search scripts ([4ebf950](https://github.com/rodbe-io/nsl/commit/4ebf950c6132d6c01d3d1280363bcafea5970209))
+
 ## [1.26.1](https://github.com/rodbe-io/nsl/compare/v1.26.0...v1.26.1) (2025-01-21)
 
 
