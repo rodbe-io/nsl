@@ -98,7 +98,7 @@ export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
   console.log(chalk.black.bold.bgGreenBright(commandToRun.root));
 
   if (debug) {
-    console.log(commandToRun, scriptPath);
+    console.log({ commandToRun, scriptPath });
   }
 
   if (print) {
