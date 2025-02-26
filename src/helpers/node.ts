@@ -1,7 +1,11 @@
 import type { ScriptForInquirer } from '@/models/script.types';
 import { getPackageManager } from '@/utils/node';
+import { voltaExists } from './volta';
 
-export const getCommandToRun = (answerSelected: ScriptForInquirer['value'], rootPackageManager?: string) => {
+const getCommandToRunFromRoot = (
+  answerSelected: ScriptForInquirer['value'],
+  rootPackageManager?: string
+) => {
   const { folderContainer, packageManager, scriptName, packageName } = answerSelected;
   const runner = getPackageManager(packageManager ?? rootPackageManager);
 
@@ -18,4 +22,32 @@ export const getCommandToRun = (answerSelected: ScriptForInquirer['value'], root
   }
 
   return `npm run ${scriptName} -w ${folderContainer}`;
+};
+
+const getCommandToRunFromFolder = (
+  answerSelected: ScriptForInquirer['value'],
+  rootPackageManager?: string
+) => {
+  const { packageManager, scriptName } = answerSelected;
+  const runner = getPackageManager(packageManager ?? rootPackageManager);
+  const commandToRun = `${runner} run ${scriptName}`;
+
+  if (voltaExists()) {
+    return `volta run npm run ${scriptName}`;
+  }
+
+  return commandToRun;
+};
+
+export const getCommandToRun = (
+  answerSelected: ScriptForInquirer['value'],
+  rootPackageManager?: string
+) => {
+  const commandToRunFromRoot = getCommandToRunFromRoot(answerSelected, rootPackageManager);
+  const commandToRunFromFolder = getCommandToRunFromFolder(answerSelected, rootPackageManager);
+
+  return {
+    root: commandToRunFromRoot,
+    folder: commandToRunFromFolder,
+  };
 };

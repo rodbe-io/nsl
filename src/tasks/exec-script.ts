@@ -1,9 +1,10 @@
 import { execSync } from 'node:child_process';
 import { setTimeout } from 'node:timers/promises';
+import { join } from 'node:path';
 
 import search from '@inquirer/search';
 import chalk from 'chalk';
-import { compose, fuzzySearch } from '@rodbe/fn-utils';
+import { compose, fuzzySearch, tryCatch } from '@rodbe/fn-utils';
 import type { NormalizedScripts } from '@rodbe/get-package-jsons';
 import { fsCache } from '@rodbe/lru-cache-fs';
 
@@ -93,18 +94,25 @@ export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
 
   syncFs.setItem(cwd, answer);
   const commandToRun = getCommandToRun(answer, rootPackageJson?.packageManager);
-  console.log(chalk.black.bold.bgGreenBright(commandToRun));
+  const scriptPath = answer.folderContainer === 'Root' ? cwd : join(cwd, answer.folderContainer);
+  console.log(chalk.black.bold.bgGreenBright(commandToRun.root));
+
+  if (debug) {
+    console.log(commandToRun, scriptPath);
+  }
 
   if (print) {
     process.exit(0);
   }
 
-  try {
-    execSync(commandToRun, {
-      cwd,
+  const [err] = tryCatch(() => {
+    execSync(commandToRun.folder, {
+      cwd: scriptPath,
       stdio: [process.stdin, process.stdout, process.stderr],
     });
-  } catch (err) {
+  });
+
+  if (err) {
     console.log(chalk.white.bold.bgMagenta(`Ups, try to run the script manually `));
     console.log(commandToRun);
   }

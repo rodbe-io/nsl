@@ -12,5 +12,8 @@ export type ExecScriptParams = {
 
 export type ScriptForInquirer = {
   name: string;
-  value: Script & Pick<NormalizedScripts[string], 'packageManager' | 'packageName' | 'folderContainer'>;
+  value: Script & { packageName?: string } & Pick<
+      NormalizedScripts[string],
+      'packageManager' | 'folderContainer'
+    >;
 };

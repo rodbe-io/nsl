@@ -1,35 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["ES2022"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "target": "ES2022",
-    "useDefineForClassFields": true,
-    "declaration": true,
-    "verbatimModuleSyntax": true,
-    "noUncheckedIndexedAccess": true,
-
-    /* Bundler mode */
-		// Allow JS files to be imported from TS and vice versa
-		"allowJs": true,
-		// Use correct ESM import behavior
-		"esModuleInterop": true,
-    "outDir": "dist",
-    "noEmit": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "resolveJsonModule": true,
-    "moduleResolution": "Bundler",
-
-    /* Linting */
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strict": true,
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "extends": "@rodbe/tsconfig/bundler/no-dom/app",
+  "include": ["src", "commitlint.config.ts", ".nano-staged.js", "vitest.config.ts", "release.config.js"]
 }

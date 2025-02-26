@@ -12,26 +12,35 @@ const scriptToRowTable = (script: Script): [string, string, string] => {
 export type GroupedScriptsTable = {
   [key: string]: ScriptForInquirer[];
 };
-export const getGroupedScriptsWithTableProp = (packageJsons: NormalizedScripts): GroupedScriptsTable => {
-  return Object.entries(packageJsons).reduce<GroupedScriptsTable>((acc, [folderContainer, packageJson]) => {
-    const { scripts = [], packageManager, packageName } = packageJson;
-    const scriptsWithRowFormat = table(scripts.map(scriptToRowTable), { align: ['r', 'c', 'l'] }).split('\n');
+export const getGroupedScriptsWithTableProp = (
+  packageJsons: NormalizedScripts
+): GroupedScriptsTable => {
+  return Object.entries(packageJsons).reduce<GroupedScriptsTable>(
+    (acc, [folderContainer, packageJson]) => {
+      const { scripts = [], packageManager, name: packageName } = packageJson;
+      const scriptsWithRowFormat = table(scripts.map(scriptToRowTable), {
+        align: ['r', 'c', 'l'],
+      }).split('\n');
 
-    acc[folderContainer] = scripts.map<ScriptForInquirer>(({ scriptContent, scriptName }, idx) => {
-      return {
-        name: scriptsWithRowFormat[idx] as string,
-        value: {
-          folderContainer,
-          packageManager,
-          packageName,
-          scriptContent,
-          scriptName,
-        },
-      };
-    });
+      acc[folderContainer] = scripts.map<ScriptForInquirer>(
+        ({ scriptContent, scriptName }, idx) => {
+          return {
+            name: scriptsWithRowFormat[idx] as string,
+            value: {
+              folderContainer,
+              packageManager,
+              packageName,
+              scriptContent,
+              scriptName,
+            },
+          };
+        }
+      );
 
-    return acc;
-  }, {});
+      return acc;
+    },
+    {}
+  );
 };
 
 export type GroupedScriptsInquirerFormat = Array<ScriptForInquirer | Separator>;
