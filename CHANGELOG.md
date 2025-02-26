@@ -1,3 +1,10 @@
+## [1.29.0](https://github.com/rodbe-io/nsl/compare/v1.28.0...v1.29.0) (2025-02-26)
+
+
+### Features
+
+* style debug for commandToRun ([93e2bf6](https://github.com/rodbe-io/nsl/commit/93e2bf6ab419518d5062788658fd7869cc78b04e))
+
 ## [1.28.0](https://github.com/rodbe-io/nsl/compare/v1.27.0...v1.28.0) (2025-02-26)
 
 
