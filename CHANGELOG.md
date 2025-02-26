@@ -1,3 +1,10 @@
+## [1.28.0](https://github.com/rodbe-io/nsl/compare/v1.27.0...v1.28.0) (2025-02-26)
+
+
+### Features
+
+* support for volta ([54ee0b3](https://github.com/rodbe-io/nsl/commit/54ee0b3183569ce344cbcb43dac6d2004de7d89a))
+
 ## [1.27.0](https://github.com/rodbe-io/nsl/compare/v1.26.1...v1.27.0) (2025-02-18)
 
 
