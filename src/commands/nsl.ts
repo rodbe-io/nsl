@@ -4,7 +4,7 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { checkUpdates } from '@rodbe/check-updates';
 
-import { getNslPkgJson, getNslPkgJsonPath } from '@/helpers/nsl';
+import { getMainPkgJsonPath, getNslPkgJson } from '@/helpers/nsl';
 import { aboutNSL } from '@/tasks/get-info';
 import { execScript } from '@/tasks/exec-script';
 import { initEvents } from '@/events';
@@ -27,7 +27,7 @@ const init = async () => {
   const { update, checkNewVersion } = checkUpdates({
     askToUpdate: true,
     dontAskCheckInterval: DAY_IN_MS,
-    packageJsonPath: getNslPkgJsonPath(),
+    packageJsonPath: getMainPkgJsonPath(),
     updateCheckInterval: WEEK_IN_MS,
   });
 
