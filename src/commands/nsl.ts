@@ -6,7 +6,7 @@ import { checkUpdates } from '@rodbe/check-updates';
 
 import { getMainPkgJsonPath, getNslPkgJson } from '@/helpers/nsl';
 import { aboutNSL } from '@/tasks/get-info';
-import { execScript } from '@/tasks/exec-script';
+import { findAndExecScript } from '@/tasks/find-and-exec-script';
 import { initEvents } from '@/events';
 import { DAY_IN_MS, WEEK_IN_MS } from '@/constants';
 
@@ -47,7 +47,7 @@ const init = async () => {
   }
 
   await checkNewVersion?.();
-  await execScript(argv);
+  await findAndExecScript(argv);
 };
 
 init();

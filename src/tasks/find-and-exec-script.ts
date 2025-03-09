@@ -6,7 +6,6 @@ import search from '@inquirer/search';
 import chalk from 'chalk';
 import { compose, fuzzySearch, tryCatch } from '@rodbe/fn-utils';
 import type { NormalizedScripts } from '@rodbe/get-package-jsons';
-import { fsCache } from '@rodbe/lru-cache-fs';
 
 import {
   getGroupedScriptsWithTableProp,
@@ -14,11 +13,11 @@ import {
   type GroupedScriptsTable,
 } from '@/mapper';
 import { getAllScriptsFromPackageJsons } from '@/utils/fs';
-import { NPM_SCRIPTS_TO_IGNORE, PAGE_SIZE, QUATER_IN_MS, RERUN_CACHE_NAME } from '@/constants';
-import type { Config, ExecScriptParams, ScriptForInquirer } from '@/models/script.types';
+import { NPM_SCRIPTS_TO_IGNORE, PAGE_SIZE } from '@/constants';
+import type { Config, ExecScriptParams } from '@/models/script.types';
 import { getConfig } from './get-config';
 import { getCommandToRun } from '@/helpers/node';
-import { nslCachePath } from '@/helpers/nsl';
+import { rerunCache } from '@/helpers/cache';
 
 const DEBOUNCE_TIME = 300;
 
@@ -51,14 +50,9 @@ const filterScripts =
     );
   };
 
-export const execScript = async ({ all, debug, print }: ExecScriptParams) => {
+export const findAndExecScript = async ({ all, debug, print }: ExecScriptParams) => {
   const cwd = process.cwd();
-  const { syncFs } = fsCache<string, ScriptForInquirer['value'], any>({
-    cacheName: RERUN_CACHE_NAME,
-    cachePath: nslCachePath,
-    max: 5,
-    ttl: QUATER_IN_MS,
-  });
+  const { syncFs } = rerunCache();
   const config = await getConfig(cwd, { debug });
   const groupedScripts = compose(filterScripts(all)(config), getAllScriptsFromPackageJsons)(cwd);
   const groupedScriptsWithTable = getGroupedScriptsWithTableProp(groupedScripts);
