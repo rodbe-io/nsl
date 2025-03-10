@@ -1,3 +1,11 @@
+## [1.30.0](https://github.com/rodbe-io/nsl/compare/v1.29.0...v1.30.0) (2025-03-10)
+
+
+### Features
+
+* add nn command to run the last executed script ([e95ca99](https://github.com/rodbe-io/nsl/commit/e95ca990ab51a04e526ed6bb247244afbd15a6ab))
+* dynamically get pkg.json path ([80a3898](https://github.com/rodbe-io/nsl/commit/80a3898b4999c4db30fcedf4323f5433b4a94949))
+
 ## [1.29.0](https://github.com/rodbe-io/nsl/compare/v1.28.0...v1.29.0) (2025-02-26)
 
 
