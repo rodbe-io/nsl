@@ -1,10 +1,7 @@
-import { execSync } from 'node:child_process';
 import { setTimeout } from 'node:timers/promises';
-import { join } from 'node:path';
 
 import search from '@inquirer/search';
-import chalk from 'chalk';
-import { compose, fuzzySearch, tryCatch } from '@rodbe/fn-utils';
+import { compose, fuzzySearch } from '@rodbe/fn-utils';
 import type { NormalizedScripts } from '@rodbe/get-package-jsons';
 
 import {
@@ -16,8 +13,7 @@ import { getAllScriptsFromPackageJsons } from '@/utils/fs';
 import { NPM_SCRIPTS_TO_IGNORE, PAGE_SIZE } from '@/constants';
 import type { Config, ExecScriptParams } from '@/models/script.types';
 import { getConfig } from './get-config';
-import { getCommandToRun } from '@/helpers/node';
-import { rerunCache } from '@/helpers/cache';
+import { execScript } from './exec-script';
 
 const DEBOUNCE_TIME = 300;
 
@@ -52,7 +48,6 @@ const filterScripts =
 
 export const findAndExecScript = async ({ all, debug, print }: ExecScriptParams) => {
   const cwd = process.cwd();
-  const { syncFs } = rerunCache();
   const config = await getConfig(cwd, { debug });
   const groupedScripts = compose(filterScripts(all)(config), getAllScriptsFromPackageJsons)(cwd);
   const groupedScriptsWithTable = getGroupedScriptsWithTableProp(groupedScripts);
@@ -86,28 +81,6 @@ export const findAndExecScript = async ({ all, debug, print }: ExecScriptParams)
     },
   });
 
-  syncFs.setItem(cwd, answer);
-  const commandToRun = getCommandToRun(answer, rootPackageJson?.packageManager);
-  const scriptPath = answer.folderContainer === 'Root' ? cwd : join(cwd, answer.folderContainer);
-  console.log(chalk.black.bold.bgGreenBright(commandToRun.root));
-
-  if (debug) {
-    console.log({ commandToRun, scriptPath });
-  }
-
-  if (print) {
-    process.exit(0);
-  }
-
-  const [err] = tryCatch(() => {
-    execSync(commandToRun.folder, {
-      cwd: scriptPath,
-      stdio: [process.stdin, process.stdout, process.stderr],
-    });
-  });
-
-  if (err) {
-    console.log(chalk.white.bold.bgMagenta(`Ups, try to run the script manually `));
-    console.log(commandToRun);
-  }
+  const rootPkgManager = rootPackageJson?.packageManager;
+  execScript({ answer, cwd, debug, print, rootPkgManager });
 };

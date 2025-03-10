@@ -17,12 +17,19 @@ npm i -g @rodbe/nsl
 
 ## Usage 🏎️
 
-Just run the command and search for the script you want to run.
+### 🌟 Just run the command and search for the script you want to run.
 
 ```bash
 nsl
 ```
 ![nsl](./assets/preview.gif)
+
+### 🌟 To run the *latest executed script* of the current project
+
+```bash
+nn
+```
+![nsl](./assets/nn-preview.gif)
 
 ## Arguments
 

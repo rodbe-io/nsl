@@ -1,6 +1,7 @@
 {
   "author": "KevinRodbe",
   "bin": {
+    "nn": "./dist/commands/nn.js",
     "nsl": "./dist/commands/nsl.js"
   },
   "dependencies": {
