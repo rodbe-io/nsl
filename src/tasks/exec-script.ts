@@ -19,8 +19,8 @@ type ExecScriptParamss = {
 
 export const execScript = ({ answer, cwd, debug, print, rootPkgManager }: ExecScriptParamss) => {
   const { syncFs } = rerunCache();
-  syncFs.setItem(cwd, { ...answer, rootPkgManager, debug, print });
   const commandToRun = getCommandToRun(answer, rootPkgManager);
+  syncFs.setItem(cwd, { answer, rootPkgManager, debug, print, commandToRun });
   const scriptPath = answer.folderContainer === 'Root' ? cwd : join(cwd, answer.folderContainer);
   console.log(chalk.black.bold.bgGreenBright(commandToRun.root));
 
