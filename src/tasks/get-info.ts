@@ -6,11 +6,10 @@ import chalk from 'chalk';
 import { LONG_CONFIG_CACHE_NAME, RERUN_CACHE_NAME, SHORT_CONFIG_CACHE_NAME } from '@/constants';
 import { getNslPkgJson, getNSLDistPath, getCacheFilePath } from '@/helpers/nsl';
 import { logNslBanner } from '@/helpers/log';
-import { getConfigFilePath } from './get-config';
+import { getCoreConfig } from '@rodbe/get-config';
 import { getNodeVersion } from './get-node-version';
 
 export const aboutNSL = (argv: Record<string, any>) => {
-  const cwd = process.cwd();
   const rerunCachePath = getCacheFilePath(RERUN_CACHE_NAME);
   const shortConfigCachePath = getCacheFilePath(SHORT_CONFIG_CACHE_NAME);
   const longConfigCachePath = getCacheFilePath(LONG_CONFIG_CACHE_NAME);
@@ -19,7 +18,10 @@ export const aboutNSL = (argv: Record<string, any>) => {
 
   console.log(chalk.black.bold.bgGreenBright('Current version ->'), getNslPkgJson().version);
   console.log(chalk.black.bold.bgGreenBright('NSL directory ->'), getNSLDistPath());
-  console.log(chalk.black.bold.bgGreenBright('ConfigFilePath ->'), getConfigFilePath(cwd, { debug: true }));
+  console.log(
+    chalk.black.bold.bgGreenBright('ConfigFile ->'),
+    getCoreConfig('nsl', { debug: true })
+  );
   console.log(chalk.black.bold.bgGreenBright('Arguments ->'), JSON.stringify(argv));
   console.log(chalk.black.bold.bgGreenBright('Home ->'), homedir());
   console.log(chalk.black.bold.bgGreenBright('Machine ->'), arch);

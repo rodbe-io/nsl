@@ -1,6 +1,7 @@
 import { setTimeout } from 'node:timers/promises';
 
 import search from '@inquirer/search';
+import { getConfig } from '@rodbe/get-config';
 import { compose, fuzzySearch } from '@rodbe/fn-utils';
 import type { NormalizedScripts } from '@rodbe/get-package-jsons';
 
@@ -12,7 +13,6 @@ import {
 import { getAllScriptsFromPackageJsons } from '@/utils/fs';
 import { NPM_SCRIPTS_TO_IGNORE, PAGE_SIZE } from '@/constants';
 import type { Config, ExecScriptParams } from '@/models/script.types';
-import { getConfig } from './get-config';
 import { execScript } from './exec-script';
 
 const DEBOUNCE_TIME = 300;
@@ -48,7 +48,7 @@ const filterScripts =
 
 export const findAndExecScript = async ({ all, debug, print }: ExecScriptParams) => {
   const cwd = process.cwd();
-  const config = await getConfig(cwd, { debug });
+  const config = await getConfig<Config>('nsl', { debug });
   const groupedScripts = compose(filterScripts(all)(config), getAllScriptsFromPackageJsons)(cwd);
   const groupedScriptsWithTable = getGroupedScriptsWithTableProp(groupedScripts);
   const groupedScriptsWithInquirerFormat =

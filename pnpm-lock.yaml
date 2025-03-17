@@ -20,6 +20,9 @@ importers:
       '@rodbe/fn-utils':
         specifier: ^1.5.0
         version: 1.5.0
+      '@rodbe/get-config':
+        specifier: ^1.0.0
+        version: 1.0.0
       '@rodbe/get-package-jsons':
         specifier: ^3.0.1
         version: 3.0.1
@@ -471,6 +474,10 @@ packages:
 
   '@rodbe/fn-utils@1.5.0':
     resolution: {integrity: sha512-5GOJ6Al7VUHDd5HZySmBn9eltsp2rfCLXkr26DUTnaGCWh2YTE/WkjqKrUp0xtqmiD6Qp7D6PIt+ALnL/LtpQg==}
+    engines: {node: '>= 18.18.2', npm: '>= 8.11.0', pnpm: '>= 9.15.2'}
+
+  '@rodbe/get-config@1.0.0':
+    resolution: {integrity: sha512-Mbl2mr7RrA9lMKDxaW5Rnct626gZuI6nfLvIWPkp0tV8yFswIHdrnSDNxj2C9O52wyVyvwUEXCN3A3545dIvMQ==}
     engines: {node: '>= 18.18.2', npm: '>= 8.11.0', pnpm: '>= 9.15.2'}
 
   '@rodbe/get-package-jsons@3.0.1':
@@ -3077,6 +3084,10 @@ snapshots:
       - '@types/node'
 
   '@rodbe/fn-utils@1.5.0': {}
+
+  '@rodbe/get-config@1.0.0':
+    dependencies:
+      '@rodbe/fn-utils': 1.5.0
 
   '@rodbe/get-package-jsons@3.0.1':
     dependencies:
