@@ -1,3 +1,10 @@
+## [1.32.0](https://github.com/rodbe-io/nsl/compare/v1.31.0...v1.32.0) (2025-03-17)
+
+
+### Features
+
+* get-config from external pkg ([b5d7dfd](https://github.com/rodbe-io/nsl/commit/b5d7dfd2c0a7cbf2f6b77e182fd5388c193760f8))
+
 ## [1.31.0](https://github.com/rodbe-io/nsl/compare/v1.30.0...v1.31.0) (2025-03-11)
 
 
