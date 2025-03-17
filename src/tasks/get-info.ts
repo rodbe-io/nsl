@@ -2,11 +2,11 @@ import { homedir, platform } from 'node:os';
 import { arch } from 'node:process';
 
 import chalk from 'chalk';
+import { getCoreConfig } from '@rodbe/get-config';
 
 import { LONG_CONFIG_CACHE_NAME, RERUN_CACHE_NAME, SHORT_CONFIG_CACHE_NAME } from '@/constants';
 import { getNslPkgJson, getNSLDistPath, getCacheFilePath } from '@/helpers/nsl';
 import { logNslBanner } from '@/helpers/log';
-import { getCoreConfig } from '@rodbe/get-config';
 import { getNodeVersion } from './get-node-version';
 
 export const aboutNSL = (argv: Record<string, any>) => {
