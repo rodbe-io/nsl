@@ -89,6 +89,7 @@
   ],
   "license": "MIT",
   "name": "@rodbe/nsl",
+  "packageManager": "pnpm@9.5.0",
   "publishConfig": {
     "access": "public"
   },
@@ -99,15 +100,18 @@
   "scripts": {
     "build": "pkgroll",
     "hi": "echo \"hi root\"",
-    "prebuild": "run-s ts:check update:pkgJson",
+    "prebuild": "run-s test:unit ts:check",
     "release": "semantic-release",
     "start": "pkgroll --watch",
     "test:unit": "vitest run",
-    "ts:check": "tsc --noEmit",
-    "update:pkgJson": "node scripts/pkgJson.js"
+    "ts:check": "tsc --noEmit"
   },
   "type": "module",
   "version": "1.33.0",
+  "volta": {
+    "node": "18.18.2",
+    "pnpm": "9.5.0"
+  },
   "workspaces": [
     "examples/**"
   ]
