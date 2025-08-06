@@ -39,6 +39,7 @@
     "@types/yargs": "^17.0.33",
     "@vitest/coverage-v8": "^2.1.8",
     "conventional-changelog-conventionalcommits": "5.0.0",
+    "npm-run-all2": "^8.0.4",
     "pkgroll": "^2.11.2",
     "prettier": "^3.5.3",
     "semantic-release": "20.1.0",
@@ -99,16 +100,18 @@
   "scripts": {
     "build": "pkgroll",
     "hi": "echo \"hi root\"",
-    "prebuild": "pnpm run type-check",
+    "prebuild": "run-s ts:check update:pkgJson",
     "release": "semantic-release",
     "start": "pkgroll --watch",
     "test:unit": "vitest run",
-    "type-check": "tsc --noEmit"
+    "ts:check": "tsc --noEmit",
+    "update:pkgJson": "node scripts/pkgJson.js"
   },
   "type": "module",
   "version": "1.32.0",
   "volta": {
-    "node": "18.18.2"
+    "node": "18.18.2",
+    "pnpm": "9.5.0"
   },
   "workspaces": [
     "examples/**"
