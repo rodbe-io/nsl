@@ -53,7 +53,7 @@ export const findAndExecScript = async ({ all, debug, print }: ExecScriptParams)
   const groupedScriptsWithTable = getGroupedScriptsWithTableProp(groupedScripts);
   const groupedScriptsWithInquirerFormat =
     getGroupedScriptsWithInquirerFormat(groupedScriptsWithTable);
-  const rootPackageJson = groupedScripts?.Root;
+  const rootPackageJson = groupedScripts?.['Root'];
 
   const answer = await search({
     message: 'Select or search a script to run:',
