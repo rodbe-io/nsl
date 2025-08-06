@@ -89,7 +89,6 @@
   ],
   "license": "MIT",
   "name": "@rodbe/nsl",
-  "packageManager": "pnpm@9.5.0",
   "publishConfig": {
     "access": "public"
   },
@@ -108,11 +107,7 @@
     "update:pkgJson": "node scripts/pkgJson.js"
   },
   "type": "module",
-  "version": "1.32.0",
-  "volta": {
-    "node": "18.18.2",
-    "pnpm": "9.5.0"
-  },
+  "version": "1.33.0",
   "workspaces": [
     "examples/**"
   ]
