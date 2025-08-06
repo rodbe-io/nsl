@@ -1,3 +1,11 @@
+## [1.33.1](https://github.com/rodbe-io/nsl/compare/v1.33.0...v1.33.1) (2025-08-06)
+
+
+### Bug Fixes
+
+* node compatibility ([890ede4](https://github.com/rodbe-io/nsl/commit/890ede4c9a3ed075feb14ea27c362c638fa774d8))
+* remove script for edit pkgJson ([068ff88](https://github.com/rodbe-io/nsl/commit/068ff88988744fb96dc193788672eb9ad802d5b4))
+
 ## [1.33.0](https://github.com/rodbe-io/nsl/compare/v1.32.0...v1.33.0) (2025-08-06)
 
 
