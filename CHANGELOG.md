@@ -1,3 +1,9 @@
+## [1.35.0](https://github.com/rodbe-io/nsl/compare/v1.34.0...v1.35.0) (2025-12-24)
+
+### Features
+
+* bump deps ([773ed9d](https://github.com/rodbe-io/nsl/commit/773ed9d0c443f1f0cb62753a7f5fbad587804b88))
+
 ## [1.34.0](https://github.com/rodbe-io/nsl/compare/v1.33.1...v1.34.0) (2025-12-24)
 
 ### Features
