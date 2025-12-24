@@ -4,10 +4,10 @@ import { voltaExists } from './volta';
 
 const getCommandToRunFromRoot = (
   answerSelected: ScriptForInquirer['value'],
-  rootPackageManager?: string
+  rootPkgManager?: string
 ) => {
   const { folderContainer, packageManager, scriptName, packageName } = answerSelected;
-  const runner = getPackageManager(packageManager ?? rootPackageManager);
+  const runner = getPackageManager(packageManager ?? rootPkgManager);
 
   if (folderContainer === 'Root') {
     return `${runner} run ${scriptName}`;
@@ -26,10 +26,10 @@ const getCommandToRunFromRoot = (
 
 const getCommandToRunFromFolder = (
   answerSelected: ScriptForInquirer['value'],
-  rootPackageManager?: string
+  rootPkgManager?: string
 ) => {
   const { packageManager, scriptName } = answerSelected;
-  const runner = getPackageManager(packageManager ?? rootPackageManager);
+  const runner = getPackageManager(packageManager ?? rootPkgManager);
   const commandToRun = `${runner} run ${scriptName}`;
 
   if (voltaExists()) {
@@ -39,12 +39,14 @@ const getCommandToRunFromFolder = (
   return commandToRun;
 };
 
-export const getCommandToRun = (
-  answerSelected: ScriptForInquirer['value'],
-  rootPackageManager?: string
-) => {
-  const commandToRunFromRoot = getCommandToRunFromRoot(answerSelected, rootPackageManager);
-  const commandToRunFromFolder = getCommandToRunFromFolder(answerSelected, rootPackageManager);
+type GetCommandToRunParams = {
+  answerSelected: ScriptForInquirer['value'];
+  rootPkgManager?: string;
+};
+
+export const getCommandToRun = ({ answerSelected, rootPkgManager }: GetCommandToRunParams) => {
+  const commandToRunFromRoot = getCommandToRunFromRoot(answerSelected, rootPkgManager);
+  const commandToRunFromFolder = getCommandToRunFromFolder(answerSelected, rootPkgManager);
 
   return {
     root: commandToRunFromRoot,

@@ -15,7 +15,7 @@ export const init = async () => {
   const cached = rrCache.get(cwd);
 
   if (cached) {
-    const { debug, print, rootPkgManager, answer, commandToRun } = cached;
+    const { debug, print, rootPkgManager, answerSelected, commandToRun } = cached;
     const rerunOpts = {
       choices: [
         {
@@ -38,7 +38,7 @@ export const init = async () => {
     if (debug || print) {
       console.log(chalk.black.bold.bgGreenBright('NSL params ->'), { debug, print });
     }
-    execScript({ answer, cwd, debug, print, rootPkgManager });
+    execScript({ answerSelected, cwd, debug, print, rootPkgManager });
   } else {
     console.log(chalk.white.bold.bgMagenta(`Hey, there is no "last script" to run`));
   }

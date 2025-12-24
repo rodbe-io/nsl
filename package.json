@@ -51,7 +51,6 @@
     "npm": ">= 6.14.16",
     "pnpm": ">= 9.5.0"
   },
-  "engineStrict": true,
   "files": [
     "dist"
   ],

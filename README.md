@@ -29,7 +29,7 @@ Select or search a script to run: <script> [project-path]
 - `<script>`: Text to match the script name (required)
 - `[project-path]`: Text to filter by the folder where the script lives (optional)
 
-#### 🎖️ Ejemplos (Pro Tips)
+#### 🎖️ Examples (Pro Tips)
 - Search for a script named `build` throughout the entire project:
 ```sh
 Select or search a script to run: build

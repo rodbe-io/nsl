@@ -8,20 +8,28 @@ import type { ScriptForInquirer } from '@/models/script.types';
 import { getCommandToRun } from '@/helpers/node';
 import { rerunCache } from '@/helpers/cache';
 
-type ExecScriptParamss = {
+type ExecScriptParams = {
   all?: boolean;
-  answer: ScriptForInquirer['value'];
+  answerSelected: ScriptForInquirer['value'];
   cwd: string;
   debug?: boolean;
   print?: boolean;
   rootPkgManager?: string;
 };
 
-export const execScript = ({ answer, cwd, debug, print, rootPkgManager }: ExecScriptParamss) => {
+export const execScript = ({
+  answerSelected,
+  cwd,
+  debug,
+  print,
+  rootPkgManager,
+}: ExecScriptParams) => {
   const { syncFs } = rerunCache();
-  const commandToRun = getCommandToRun(answer, rootPkgManager);
-  syncFs.setItem(cwd, { answer, rootPkgManager, debug, print, commandToRun });
-  const scriptPath = answer.folderContainer === 'Root' ? cwd : join(cwd, answer.folderContainer);
+  const commandToRun = getCommandToRun({ answerSelected, rootPkgManager });
+  const scriptPath =
+    answerSelected.folderContainer === 'Root' ? cwd : join(cwd, answerSelected.folderContainer);
+
+  syncFs.setItem(cwd, { answerSelected, rootPkgManager, debug, print, commandToRun });
   console.log(chalk.black.bold.bgGreenBright(commandToRun.root));
 
   if (debug) {

@@ -5,7 +5,7 @@ import { nslCachePath } from './nsl';
 import type { ScriptForInquirer } from '@/models/script.types';
 
 type ValueToSave = {
-  answer: ScriptForInquirer['value'];
+  answerSelected: ScriptForInquirer['value'];
   debug?: boolean;
   print?: boolean;
   rootPkgManager?: string;

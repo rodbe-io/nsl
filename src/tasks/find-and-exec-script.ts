@@ -55,7 +55,7 @@ export const findAndExecScript = async ({ all, debug, print }: ExecScriptParams)
     getGroupedScriptsWithInquirerFormat(groupedScriptsWithTable);
   const rootPackageJson = groupedScripts?.['Root'];
 
-  const answer = await search({
+  const answerSelected = await search({
     message: 'Select or search a script to run:',
     pageSize: PAGE_SIZE,
     source: async (input) => {
@@ -119,5 +119,5 @@ export const findAndExecScript = async ({ all, debug, print }: ExecScriptParams)
   });
 
   const rootPkgManager = rootPackageJson?.packageManager;
-  execScript({ answer, cwd, debug, print, rootPkgManager });
+  execScript({ answerSelected, cwd, debug, print, rootPkgManager });
 };
