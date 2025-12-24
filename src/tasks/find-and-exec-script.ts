@@ -2,7 +2,7 @@ import { setTimeout } from 'node:timers/promises';
 
 import search from '@inquirer/search';
 import { getConfig } from '@rodbe/get-config';
-import { compose, fuzzySearch } from '@rodbe/fn-utils';
+import { compose, fuzzySearch, purge } from '@rodbe/fn-utils';
 import type { NormalizedScripts } from '@rodbe/get-package-jsons';
 
 import {
@@ -63,10 +63,47 @@ export const findAndExecScript = async ({ all, debug, print }: ExecScriptParams)
         return groupedScriptsWithInquirerFormat;
       }
       await setTimeout(DEBOUNCE_TIME);
+
+      const inputTexts = purge(input.split(' ')) as [string, string | undefined];
+      const [scriptToSearch, projectToSearch] = inputTexts;
+      let filteredScriptsList: GroupedScriptsTable;
+
+      if (projectToSearch) {
+        filteredScriptsList = Object.entries(groupedScriptsWithTable).reduce<GroupedScriptsTable>(
+          (acc, [folderContainer, currentScripts]) => {
+            const filteredScripts = fuzzySearch({
+              searchText: projectToSearch,
+              items: currentScripts,
+              key: 'value.folderContainer',
+            });
+            acc[folderContainer] = filteredScripts;
+
+            return acc;
+          },
+          {}
+        );
+
+        const filtered = Object.entries(filteredScriptsList).reduce<GroupedScriptsTable>(
+          (acc, [folderContainer, currentScripts]) => {
+            const filteredScripts = fuzzySearch({
+              searchText: scriptToSearch,
+              items: currentScripts,
+              key: 'name',
+            });
+            acc[folderContainer] = filteredScripts;
+
+            return acc;
+          },
+          {}
+        );
+
+        return getGroupedScriptsWithInquirerFormat(filtered);
+      }
+
       const filtered = Object.entries(groupedScriptsWithTable).reduce<GroupedScriptsTable>(
         (acc, [folderContainer, currentScripts]) => {
           const filteredScripts = fuzzySearch({
-            searchText: input,
+            searchText: scriptToSearch,
             items: currentScripts,
             key: 'name',
           });
