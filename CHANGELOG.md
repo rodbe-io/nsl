@@ -1,3 +1,9 @@
+## [1.34.0](https://github.com/rodbe-io/nsl/compare/v1.33.1...v1.34.0) (2025-12-24)
+
+### Features
+
+* search by project path ([8f71ec0](https://github.com/rodbe-io/nsl/commit/8f71ec092826013c96b01f918a4ed49006e7eace))
+
 ## [1.33.1](https://github.com/rodbe-io/nsl/compare/v1.33.0...v1.33.1) (2025-08-06)
 
 
