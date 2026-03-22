@@ -1,3 +1,9 @@
+## [1.36.0](https://github.com/rodbe-io/nsl/compare/v1.35.0...v1.36.0) (2026-03-22)
+
+### Features
+
+* add doc link for info ([5249999](https://github.com/rodbe-io/nsl/commit/524999990a42c0583cce13b3773d26ab1278b9ee))
+
 ## [1.35.0](https://github.com/rodbe-io/nsl/compare/v1.34.0...v1.35.0) (2025-12-24)
 
 ### Features
