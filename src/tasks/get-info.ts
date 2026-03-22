@@ -4,7 +4,12 @@ import { arch } from 'node:process';
 import chalk from 'chalk';
 import { getCoreConfig } from '@rodbe/get-config';
 
-import { LONG_CONFIG_CACHE_NAME, RERUN_CACHE_NAME, SHORT_CONFIG_CACHE_NAME } from '@/constants';
+import {
+  LONG_CONFIG_CACHE_NAME,
+  RERUN_CACHE_NAME,
+  SHORT_CONFIG_CACHE_NAME,
+  URL_DOCUMENTATION,
+} from '@/constants';
 import { getNslPkgJson, getNSLDistPath, getCacheFilePath } from '@/helpers/nsl';
 import { logNslBanner } from '@/helpers/log';
 import { getNodeVersion } from './get-node-version';
@@ -16,6 +21,7 @@ export const aboutNSL = (argv: Record<string, any>) => {
 
   logNslBanner();
 
+  console.log(chalk.black.bold.bgGreenBright('📚 Documentación ->'), URL_DOCUMENTATION);
   console.log(chalk.black.bold.bgGreenBright('Current version ->'), getNslPkgJson().version);
   console.log(chalk.black.bold.bgGreenBright('NSL directory ->'), getNSLDistPath());
   console.log(

@@ -1,3 +1,5 @@
+export const URL_DOCUMENTATION = 'https://www.npmjs.com/package/@rodbe/nsl';
+
 export const PAGE_SIZE = 20;
 
 export const FOLDERS_TO_IGNORE = [
