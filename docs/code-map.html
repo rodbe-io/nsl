@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NSL CLI — Code Map</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #0f1117; color: #e2e8f0;
+  height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+}
+header {
+  padding: 9px 16px; border-bottom: 1px solid #1e2130;
+  display: flex; align-items: center; gap: 12px;
+  background: #0d1020; flex-shrink: 0;
+}
+header h1 { font-size: 14px; font-weight: 600; color: #a5b4fc; }
+header p  { font-size: 12px; color: #475569; }
+.layout { display: flex; flex: 1; overflow: hidden; }
+.sidebar {
+  width: 256px; flex-shrink: 0; border-right: 1px solid #1e2130;
+  padding: 12px; overflow-y: auto; display: flex; flex-direction: column;
+  gap: 14px; background: #0d1020;
+}
+.s-section h3 {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .06em; color: #4b5563; margin-bottom: 7px;
+}
+.preset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.preset-btn {
+  padding: 5px 6px; border: 1px solid #1e293b; background: #141928;
+  color: #64748b; border-radius: 5px; font-size: 11px; cursor: pointer;
+  transition: all .15s;
+}
+.preset-btn:hover { border-color: #4f46e5; color: #a5b4fc; }
+.preset-btn.active { border-color: #4f46e5; background: #2d1f6e; color: #c4b5fd; }
+.toggle-row {
+  display: flex; align-items: center; gap: 7px; cursor: pointer; padding: 2px 0;
+}
+.toggle-row input { cursor: pointer; accent-color: #4f46e5; }
+.dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.dot.round { border-radius: 50%; }
+.toggle-row span { font-size: 12px; color: #94a3b8; }
+.toggle-list { display: flex; flex-direction: column; gap: 4px; }
+.comment-item {
+  background: #141928; border: 1px solid #1e293b; border-radius: 5px;
+  padding: 7px 8px; font-size: 11px;
+}
+.comment-item .cn { color: #a5b4fc; font-weight: 600; margin-bottom: 1px; }
+.comment-item .cf { color: #475569; font-size: 10px; font-family: monospace; margin-bottom: 4px; }
+.comment-item .ct { color: #cbd5e1; line-height: 1.45; }
+.comment-item .del-btn {
+  background: none; border: none; color: #ef4444; cursor: pointer;
+  font-size: 10px; padding: 2px 4px; margin-top: 5px; border-radius: 3px;
+}
+.comment-item .del-btn:hover { background: #2d1010; }
+.no-comments { color: #334155; font-size: 12px; font-style: italic; }
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.canvas-area { flex: 1; position: relative; overflow: hidden; background: #08090f; }
+.zoom-controls {
+  position: absolute; top: 10px; right: 10px;
+  display: flex; gap: 4px; z-index: 10;
+}
+.zoom-btn {
+  width: 28px; height: 28px; background: #141928; border: 1px solid #1e293b;
+  color: #64748b; border-radius: 5px; cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.zoom-btn:hover { border-color: #4f46e5; color: #a5b4fc; }
+#canvas-wrap { width: 100%; height: 100%; overflow: hidden; cursor: grab; }
+#canvas-wrap.grabbing { cursor: grabbing; }
+#diagram-t { transform-origin: 0 0; }
+.prompt-area {
+  flex-shrink: 0; border-top: 1px solid #1e2130; padding: 9px 14px;
+  background: #0d1020; display: flex; align-items: flex-start; gap: 10px;
+  min-height: 68px; max-height: 115px;
+}
+.prompt-label { font-size: 10px; color: #4f46e5; font-weight: 700; flex-shrink: 0; padding-top: 1px; }
+#prompt-text {
+  flex: 1; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px;
+  color: #64748b; line-height: 1.5; overflow-y: auto; max-height: 98px;
+  white-space: pre-wrap;
+}
+#copy-btn {
+  flex-shrink: 0; padding: 5px 12px; background: #4f46e5; color: white;
+  border: none; border-radius: 5px; font-size: 11px; cursor: pointer; font-weight: 600;
+}
+#copy-btn:hover { background: #4338ca; }
+#copy-btn.copied { background: #059669; }
+.modal-backdrop {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.72); z-index: 100;
+  align-items: center; justify-content: center;
+}
+.modal-backdrop.open { display: flex; }
+.modal {
+  background: #141928; border: 1px solid #2d3748; border-radius: 10px;
+  padding: 20px; width: 360px; max-width: 90vw;
+}
+.modal h3 { font-size: 14px; color: #a5b4fc; margin-bottom: 3px; }
+.modal .mf { font-size: 11px; color: #475569; margin-bottom: 12px; font-family: monospace; }
+.modal textarea {
+  width: 100%; background: #0f1117; border: 1px solid #2d3748; border-radius: 6px;
+  color: #e2e8f0; font-size: 12px; padding: 8px; resize: vertical;
+  min-height: 80px; font-family: system-ui, sans-serif;
+}
+.modal-btns { display: flex; gap: 8px; margin-top: 11px; justify-content: flex-end; }
+.modal-btns button {
+  padding: 6px 14px; border-radius: 5px; font-size: 12px;
+  cursor: pointer; font-weight: 500; border: none;
+}
+.btn-cancel { background: #1e293b; color: #94a3b8; }
+.btn-save { background: #4f46e5; color: white; }
+</style>
+</head>
+<body>
+<header>
+  <h1>NSL CLI — Code Map</h1>
+  <p>Node Script Launcher · click any node to add feedback</p>
+</header>
+<div class="layout">
+  <div class="sidebar">
+    <div class="s-section">
+      <h3>View Preset</h3>
+      <div class="preset-grid" id="preset-btns"></div>
+    </div>
+    <div class="s-section">
+      <h3>Layers</h3>
+      <div class="toggle-list" id="layer-toggles"></div>
+    </div>
+    <div class="s-section">
+      <h3>Connections</h3>
+      <div class="toggle-list" id="conn-toggles"></div>
+    </div>
+    <div class="s-section">
+      <h3>Comments (<span id="comment-count">0</span>)</h3>
+      <div id="comments-list"><p class="no-comments">Click a node to add feedback</p></div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="canvas-area">
+      <div class="zoom-controls">
+        <button class="zoom-btn" id="zoom-in">+</button>
+        <button class="zoom-btn" id="zoom-reset">⊙</button>
+        <button class="zoom-btn" id="zoom-out">−</button>
+      </div>
+      <div id="canvas-wrap">
+        <div id="diagram-t">
+          <svg id="diagram" width="1120" height="720" viewBox="0 0 1120 720"></svg>
+        </div>
+      </div>
+    </div>
+    <div class="prompt-area">
+      <span class="prompt-label">PROMPT</span>
+      <div id="prompt-text"></div>
+      <button id="copy-btn">Copy</button>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <h3 id="modal-title"></h3>
+    <div class="mf" id="modal-file"></div>
+    <textarea id="modal-input" placeholder="Add your feedback or question about this component…"></textarea>
+    <div class="modal-btns">
+      <button class="btn-cancel" id="modal-cancel">Cancel</button>
+      <button class="btn-save" id="modal-save">Save Comment</button>
+    </div>
+  </div>
+</div>
+<script>
+const LAYERS = [
+  { id: 'cli',      label: 'CLI Commands',   color: '#93c5fd' },
+  { id: 'events',   label: 'Events',         color: '#fcd34d' },
+  { id: 'tasks',    label: 'Tasks',          color: '#6ee7b7' },
+  { id: 'helpers',  label: 'Helpers',        color: '#c4b5fd' },
+  { id: 'utils',    label: 'Utils / Models', color: '#f9a8d4' },
+  { id: 'external', label: 'External Pkgs',  color: '#94a3b8' },
+];
+
+const CONN_TYPES = [
+  { id: 'data-flow',  label: 'Data Flow',     color: '#3b82f6', dash: '' },
+  { id: 'tool-call',  label: 'Function Call', color: '#10b981', dash: '6,3' },
+  { id: 'dependency', label: 'Import',        color: '#4b5563', dash: '3,3' },
+];
+
+const NODES = [
+  // CLI
+  { id: 'nsl-cmd',      label: 'nsl',               subtitle: 'commands/nsl.ts',               x: 155, y: 30,  w: 175, h: 50, layer: 'cli' },
+  { id: 'nn-cmd',       label: 'nn',                subtitle: 'commands/nn.ts',                x: 670, y: 30,  w: 145, h: 50, layer: 'cli' },
+  // Events
+  { id: 'events',       label: 'initEvents',         subtitle: 'events/index.ts',               x: 370, y: 135, w: 175, h: 50, layer: 'events' },
+  // Tasks
+  { id: 'find-exec',    label: 'findAndExecScript',  subtitle: 'tasks/find-and-exec-script.ts', x: 20,  y: 240, w: 200, h: 50, layer: 'tasks' },
+  { id: 'exec-script',  label: 'execScript',         subtitle: 'tasks/exec-script.ts',          x: 278, y: 240, w: 155, h: 50, layer: 'tasks' },
+  { id: 'get-info',     label: 'aboutNSL',           subtitle: 'tasks/get-info.ts',             x: 494, y: 240, w: 140, h: 50, layer: 'tasks' },
+  { id: 'get-node-ver', label: 'getNodeVersion',     subtitle: 'tasks/get-node-version.ts',     x: 696, y: 240, w: 175, h: 50, layer: 'tasks' },
+  // Helpers
+  { id: 'cache-helper', label: 'rerunCache',         subtitle: 'helpers/cache.ts',              x: 20,  y: 345, w: 135, h: 50, layer: 'helpers' },
+  { id: 'nsl-helper',   label: 'nslHelpers',         subtitle: 'helpers/nsl.ts',                x: 215, y: 345, w: 145, h: 50, layer: 'helpers' },
+  { id: 'node-helper',  label: 'getCommandToRun',    subtitle: 'helpers/node.ts',               x: 418, y: 345, w: 165, h: 50, layer: 'helpers' },
+  { id: 'volta',        label: 'voltaExists',        subtitle: 'helpers/volta.ts',              x: 645, y: 345, w: 130, h: 50, layer: 'helpers' },
+  { id: 'log-helper',   label: 'logNslBanner',       subtitle: 'helpers/log.ts',                x: 840, y: 345, w: 130, h: 50, layer: 'helpers' },
+  // Utils / Models / Constants
+  { id: 'utils-fs',     label: 'getAllScripts',      subtitle: 'utils/fs.ts',                   x: 20,  y: 450, w: 130, h: 50, layer: 'utils' },
+  { id: 'utils-node',   label: 'getPackageManager',  subtitle: 'utils/node.ts',                 x: 208, y: 450, w: 160, h: 50, layer: 'utils' },
+  { id: 'mapper',       label: 'mapper',             subtitle: 'mapper.ts',                     x: 428, y: 450, w: 120, h: 50, layer: 'utils' },
+  { id: 'script-types', label: 'ScriptTypes',        subtitle: 'models/script.types.ts',        x: 615, y: 450, w: 165, h: 50, layer: 'utils' },
+  { id: 'constants',    label: 'constants',          subtitle: 'constants.ts',                  x: 840, y: 450, w: 120, h: 50, layer: 'utils' },
+  // External
+  { id: 'lru-cache',    label: '@rodbe/lru-cache-fs',      subtitle: 'filesystem LRU cache',    x: 20,  y: 560, w: 180, h: 50, layer: 'external' },
+  { id: 'get-pkgjsons', label: '@rodbe/get-package-jsons', subtitle: 'workspace scanner',       x: 260, y: 560, w: 195, h: 50, layer: 'external' },
+  { id: 'get-config',   label: '@rodbe/get-config',        subtitle: '.nslrc reader',           x: 515, y: 560, w: 150, h: 50, layer: 'external' },
+  { id: 'fn-utils',     label: '@rodbe/fn-utils',          subtitle: 'compose, fuzzySearch',    x: 725, y: 560, w: 155, h: 50, layer: 'external' },
+  { id: 'check-upd',    label: '@rodbe/check-updates',     subtitle: 'version checker',         x: 940, y: 560, w: 160, h: 50, layer: 'external' },
+  { id: 'inq-search',   label: '@inquirer/search',         subtitle: 'fuzzy search prompt',     x: 20,  y: 655, w: 175, h: 50, layer: 'external' },
+  { id: 'inq-select',   label: '@inquirer/select',         subtitle: 'select prompt',           x: 255, y: 655, w: 165, h: 50, layer: 'external' },
+  { id: 'yargs',        label: 'yargs',                    subtitle: 'CLI arg parser',          x: 480, y: 655, w: 105, h: 50, layer: 'external' },
+  { id: 'chalk',        label: 'chalk',                    subtitle: 'terminal colors',         x: 645, y: 655, w: 105, h: 50, layer: 'external' },
+];
+
+const CONNECTIONS = [
+  // nsl-cmd
+  { from: 'nsl-cmd',      to: 'events',       type: 'dependency', label: 'init' },
+  { from: 'nsl-cmd',      to: 'nsl-helper',   type: 'dependency' },
+  { from: 'nsl-cmd',      to: 'find-exec',    type: 'data-flow',  label: 'run script' },
+  { from: 'nsl-cmd',      to: 'get-info',     type: 'tool-call',  label: '--info' },
+  { from: 'nsl-cmd',      to: 'check-upd',    type: 'dependency' },
+  { from: 'nsl-cmd',      to: 'yargs',        type: 'dependency' },
+  { from: 'nsl-cmd',      to: 'constants',    type: 'dependency' },
+  // nn-cmd
+  { from: 'nn-cmd',       to: 'events',       type: 'dependency', label: 'init' },
+  { from: 'nn-cmd',       to: 'cache-helper', type: 'data-flow',  label: 'get last' },
+  { from: 'nn-cmd',       to: 'exec-script',  type: 'tool-call',  label: 'rerun' },
+  { from: 'nn-cmd',       to: 'inq-select',   type: 'dependency' },
+  { from: 'nn-cmd',       to: 'chalk',        type: 'dependency' },
+  // find-exec
+  { from: 'find-exec',    to: 'mapper',       type: 'dependency' },
+  { from: 'find-exec',    to: 'utils-fs',     type: 'dependency' },
+  { from: 'find-exec',    to: 'exec-script',  type: 'data-flow',  label: 'run' },
+  { from: 'find-exec',    to: 'constants',    type: 'dependency' },
+  { from: 'find-exec',    to: 'get-config',   type: 'dependency' },
+  { from: 'find-exec',    to: 'fn-utils',     type: 'dependency' },
+  { from: 'find-exec',    to: 'inq-search',   type: 'dependency' },
+  // exec-script
+  { from: 'exec-script',  to: 'node-helper',  type: 'dependency' },
+  { from: 'exec-script',  to: 'cache-helper', type: 'data-flow',  label: 'save' },
+  { from: 'exec-script',  to: 'fn-utils',     type: 'dependency' },
+  { from: 'exec-script',  to: 'chalk',        type: 'dependency' },
+  // get-info
+  { from: 'get-info',     to: 'nsl-helper',   type: 'dependency' },
+  { from: 'get-info',     to: 'log-helper',   type: 'dependency' },
+  { from: 'get-info',     to: 'get-node-ver', type: 'tool-call' },
+  { from: 'get-info',     to: 'constants',    type: 'dependency' },
+  { from: 'get-info',     to: 'get-config',   type: 'dependency' },
+  { from: 'get-info',     to: 'chalk',        type: 'dependency' },
+  // helpers
+  { from: 'cache-helper', to: 'lru-cache',    type: 'dependency' },
+  { from: 'cache-helper', to: 'constants',    type: 'dependency' },
+  { from: 'cache-helper', to: 'nsl-helper',   type: 'dependency' },
+  { from: 'node-helper',  to: 'utils-node',   type: 'dependency' },
+  { from: 'node-helper',  to: 'volta',        type: 'dependency' },
+  // utils
+  { from: 'utils-fs',     to: 'get-pkgjsons', type: 'dependency' },
+  { from: 'mapper',       to: 'script-types', type: 'dependency' },
+];
+
+const PRESETS = [
+  { id: 'full',  label: 'Full System', layers: ['cli','events','tasks','helpers','utils','external'], conns: ['data-flow','tool-call','dependency'] },
+  { id: 'nsl',   label: 'nsl flow',   layers: ['cli','events','tasks','helpers','utils'],             conns: ['data-flow','tool-call','dependency'] },
+  { id: 'flow',  label: 'Data Flow',  layers: ['cli','tasks','helpers'],                              conns: ['data-flow','tool-call'] },
+  { id: 'ext',   label: 'Ext Deps',   layers: ['tasks','helpers','utils','external'],                 conns: ['dependency'] },
+  { id: 'core',  label: 'Core Only',  layers: ['tasks','helpers','utils'],                            conns: ['data-flow','tool-call','dependency'] },
+];
+
+// ── State ──────────────────────────────────────────────────────────────────
+const state = {
+  layers: Object.fromEntries(LAYERS.map(l => [l.id, true])),
+  conns:  Object.fromEntries(CONN_TYPES.map(c => [c.id, true])),
+  comments: [],
+  zoom: 1, panX: 0, panY: 0,
+  activePreset: 'full',
+};
+
+const nodeMap   = Object.fromEntries(NODES.map(n => [n.id, n]));
+const layerColor = Object.fromEntries(LAYERS.map(l => [l.id, l.color]));
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('diagram');
+
+function svgEl(tag, attrs = {}, text = null) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (text !== null) e.textContent = text;
+  return e;
+}
+
+// ── Defs (arrowheads) ──────────────────────────────────────────────────────
+function initDefs() {
+  const defs = svgEl('defs');
+  CONN_TYPES.forEach(ct => {
+    const m = svgEl('marker', { id: `arr-${ct.id}`, markerWidth:'8', markerHeight:'6', refX:'7', refY:'3', orient:'auto' });
+    m.appendChild(svgEl('polygon', { points:'0 0, 8 3, 0 6', fill: ct.color }));
+    defs.appendChild(m);
+  });
+  svg.appendChild(defs);
+}
+
+// ── Edge intersection point ────────────────────────────────────────────────
+function edgePt(n, tx, ty, offset = 0) {
+  const cx = n.x + n.w / 2, cy = n.y + n.h / 2;
+  const dx = tx - cx, dy = ty - cy;
+  if (!dx && !dy) return { x: cx, y: cy };
+  const hw = n.w / 2 + offset, hh = n.h / 2 + offset;
+  if (Math.abs(dx) * hh > Math.abs(dy) * hw) {
+    const t = hw / Math.abs(dx);
+    return { x: cx + dx * t, y: cy + dy * t };
+  }
+  const t = hh / Math.abs(dy);
+  return { x: cx + dx * t, y: cy + dy * t };
+}
+
+// ── Render diagram ─────────────────────────────────────────────────────────
+function renderDiagram() {
+  while (svg.children.length > 1) svg.removeChild(svg.lastChild);
+
+  const visLayers  = new Set(LAYERS.filter(l => state.layers[l.id]).map(l => l.id));
+  const visConns   = new Set(CONN_TYPES.filter(c => state.conns[c.id]).map(c => c.id));
+  const visNodes   = NODES.filter(n => visLayers.has(n.layer));
+  const visNodeIds = new Set(visNodes.map(n => n.id));
+  const commented  = new Set(state.comments.map(c => c.target));
+
+  // Layer band backgrounds
+  const bands = {};
+  visNodes.forEach(n => {
+    if (!bands[n.layer]) bands[n.layer] = { minY: Infinity, maxY: -Infinity };
+    bands[n.layer].minY = Math.min(bands[n.layer].minY, n.y - 8);
+    bands[n.layer].maxY = Math.max(bands[n.layer].maxY, n.y + n.h + 8);
+  });
+  Object.entries(bands).forEach(([lid, b]) => {
+    const li = LAYERS.find(l => l.id === lid);
+    svg.appendChild(svgEl('rect', { x:5, y:b.minY, width:1110, height:b.maxY - b.minY, rx:6, fill: li.color+'14' }));
+    svg.appendChild(svgEl('text', { x:1112, y:b.minY+14, 'text-anchor':'end', 'font-size':'9', fill:li.color+'77', 'font-family':'system-ui,sans-serif', 'font-weight':'600' }, li.label.toUpperCase()));
+  });
+
+  // Connections
+  CONNECTIONS.forEach(conn => {
+    if (!visNodeIds.has(conn.from) || !visNodeIds.has(conn.to)) return;
+    if (!visConns.has(conn.type)) return;
+    const fn = nodeMap[conn.from], tn = nodeMap[conn.to];
+    const ct = CONN_TYPES.find(c => c.id === conn.type);
+    const fc = { x: fn.x + fn.w/2, y: fn.y + fn.h/2 };
+    const tc = { x: tn.x + tn.w/2, y: tn.y + tn.h/2 };
+    const fp = edgePt(fn, tc.x, tc.y);
+    const ep = edgePt(tn, fc.x, fc.y, 8);
+    const isV = Math.abs(ep.y - fp.y) > Math.abs(ep.x - fp.x);
+    let d;
+    if (isV) {
+      const my = (fp.y + ep.y) / 2;
+      d = `M${fp.x} ${fp.y} C${fp.x} ${my},${ep.x} ${my},${ep.x} ${ep.y}`;
+    } else {
+      const mx = (fp.x + ep.x) / 2;
+      d = `M${fp.x} ${fp.y} C${mx} ${fp.y},${mx} ${ep.y},${ep.x} ${ep.y}`;
+    }
+    svg.appendChild(svgEl('path', { d, fill:'none', stroke:ct.color, 'stroke-width':'1.5', 'stroke-dasharray':ct.dash||'none', 'stroke-opacity':'0.45', 'marker-end':`url(#arr-${ct.id})` }));
+    if (conn.label) {
+      const lx = (fp.x+ep.x)/2, ly = (fp.y+ep.y)/2;
+      svg.appendChild(svgEl('rect', { x:lx-22, y:ly-8, width:44, height:13, fill:'#08090f', rx:3, opacity:'0.9' }));
+      svg.appendChild(svgEl('text', { x:lx, y:ly+2.5, 'text-anchor':'middle', 'font-size':'8.5', fill:ct.color, 'font-family':'monospace' }, conn.label));
+    }
+  });
+
+  // Nodes
+  visNodes.forEach(n => {
+    const color = layerColor[n.layer];
+    const isC   = commented.has(n.id);
+    const g = svgEl('g', { style:'cursor:pointer', 'data-id':n.id });
+    // shadow
+    g.appendChild(svgEl('rect', { x:n.x+2, y:n.y+3, width:n.w, height:n.h, rx:6, fill:'#000', opacity:'0.35' }));
+    // body
+    g.appendChild(svgEl('rect', { x:n.x, y:n.y, width:n.w, height:n.h, rx:6, fill:color+'1e', stroke: isC ? '#f59e0b' : color+'55', 'stroke-width': isC ? '2' : '1' }));
+    if (isC) g.appendChild(svgEl('circle', { cx:n.x+n.w-6, cy:n.y+6, r:4, fill:'#f59e0b' }));
+    g.appendChild(svgEl('text', { x:n.x+n.w/2, y:n.y+20, 'text-anchor':'middle', 'font-size':'12', 'font-weight':'600', fill:color, 'font-family':'system-ui,sans-serif' }, n.label));
+    g.appendChild(svgEl('text', { x:n.x+n.w/2, y:n.y+34, 'text-anchor':'middle', 'font-size':'9', fill:color+'77', 'font-family':'monospace' }, n.subtitle));
+    g.addEventListener('click', () => openModal(n));
+    svg.appendChild(g);
+  });
+}
+
+// ── Modal ──────────────────────────────────────────────────────────────────
+let currentNode = null;
+function openModal(node) {
+  currentNode = node;
+  document.getElementById('modal-title').textContent = node.label;
+  document.getElementById('modal-file').textContent  = node.subtitle;
+  const ex = state.comments.find(c => c.target === node.id);
+  document.getElementById('modal-input').value = ex ? ex.text : '';
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('modal-input').focus();
+}
+document.getElementById('modal-cancel').onclick = () => document.getElementById('modal').classList.remove('open');
+document.getElementById('modal-save').onclick = () => {
+  const text = document.getElementById('modal-input').value.trim();
+  if (!text) { document.getElementById('modal').classList.remove('open'); return; }
+  const idx = state.comments.findIndex(c => c.target === currentNode.id);
+  const entry = { id: Date.now(), target: currentNode.id, targetLabel: currentNode.label, targetFile: currentNode.subtitle, text };
+  if (idx >= 0) state.comments[idx] = entry; else state.comments.push(entry);
+  document.getElementById('modal').classList.remove('open');
+  updateAll();
+};
+
+// ── Controls ───────────────────────────────────────────────────────────────
+function buildControls() {
+  const pb = document.getElementById('preset-btns');
+  PRESETS.forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'preset-btn' + (p.id === state.activePreset ? ' active' : '');
+    btn.textContent = p.label; btn.dataset.id = p.id;
+    btn.onclick = () => {
+      state.activePreset = p.id;
+      LAYERS.forEach(l => state.layers[l.id] = p.layers.includes(l.id));
+      CONN_TYPES.forEach(c => state.conns[c.id] = p.conns.includes(c.id));
+      updateAll();
+    };
+    pb.appendChild(btn);
+  });
+
+  const lt = document.getElementById('layer-toggles');
+  LAYERS.forEach(l => {
+    const row = document.createElement('label'); row.className = 'toggle-row';
+    const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = state.layers[l.id];
+    cb.onchange = () => { state.layers[l.id] = cb.checked; state.activePreset = null; updateAll(); };
+    const dot = document.createElement('span'); dot.className = 'dot'; dot.style.background = l.color;
+    const sp = document.createElement('span'); sp.textContent = l.label;
+    row.append(cb, dot, sp); lt.appendChild(row);
+  });
+
+  const ct = document.getElementById('conn-toggles');
+  CONN_TYPES.forEach(c => {
+    const row = document.createElement('label'); row.className = 'toggle-row';
+    const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = state.conns[c.id];
+    cb.onchange = () => { state.conns[c.id] = cb.checked; state.activePreset = null; updateAll(); };
+    const dot = document.createElement('span'); dot.className = 'dot round'; dot.style.background = c.color;
+    const sp = document.createElement('span'); sp.textContent = c.label;
+    row.append(cb, dot, sp); ct.appendChild(row);
+  });
+}
+
+function syncControls() {
+  document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.id === state.activePreset));
+  const lcbs = document.querySelectorAll('#layer-toggles input');
+  LAYERS.forEach((l, i) => { lcbs[i].checked = state.layers[l.id]; });
+  const ccbs = document.querySelectorAll('#conn-toggles input');
+  CONN_TYPES.forEach((c, i) => { ccbs[i].checked = state.conns[c.id]; });
+}
+
+// ── Comments panel ─────────────────────────────────────────────────────────
+function renderComments() {
+  document.getElementById('comment-count').textContent = state.comments.length;
+  const list = document.getElementById('comments-list');
+  list.innerHTML = '';
+  if (!state.comments.length) { list.innerHTML = '<p class="no-comments">Click a node to add feedback</p>'; return; }
+  state.comments.forEach(c => {
+    const item = document.createElement('div'); item.className = 'comment-item';
+    item.innerHTML = `<div class="cn">${c.targetLabel}</div><div class="cf">${c.targetFile}</div><div class="ct">${c.text}</div><button class="del-btn" data-id="${c.id}">✕ remove</button>`;
+    item.querySelector('.del-btn').onclick = () => { state.comments = state.comments.filter(x => x.id !== c.id); updateAll(); };
+    list.appendChild(item);
+  });
+}
+
+// ── Prompt ─────────────────────────────────────────────────────────────────
+function updatePrompt() {
+  const visL = LAYERS.filter(l => state.layers[l.id]).map(l => l.label);
+  const allL = visL.length === LAYERS.length;
+  let txt = `This is the NSL CLI codebase architecture`;
+  if (!allL) txt += `, showing the ${visL.join(', ')} layers`;
+  txt += '.';
+  const visC = CONN_TYPES.filter(c => state.conns[c.id]);
+  if (visC.length < CONN_TYPES.length) txt += ` Displaying ${visC.map(c=>c.label).join(' and ')} connections only.`;
+  if (!state.comments.length) {
+    txt += '\n\nClick nodes to add feedback — your comments will appear here as a ready-to-paste prompt.';
+  } else {
+    txt += '\n\nFeedback on specific components:\n';
+    state.comments.forEach(c => { txt += `\n**${c.targetLabel}** (${c.targetFile}):\n${c.text}\n`; });
+  }
+  document.getElementById('prompt-text').textContent = txt;
+}
+
+document.getElementById('copy-btn').onclick = function() {
+  navigator.clipboard.writeText(document.getElementById('prompt-text').textContent).then(() => {
+    this.textContent = 'Copied!'; this.classList.add('copied');
+    setTimeout(() => { this.textContent = 'Copy'; this.classList.remove('copied'); }, 1500);
+  });
+};
+
+// ── Zoom / Pan ─────────────────────────────────────────────────────────────
+function applyTransform() {
+  document.getElementById('diagram-t').style.transform = `translate(${state.panX}px,${state.panY}px) scale(${state.zoom})`;
+}
+document.getElementById('zoom-in').onclick  = () => { state.zoom = Math.min(2, state.zoom+0.1); applyTransform(); };
+document.getElementById('zoom-out').onclick = () => { state.zoom = Math.max(0.3, state.zoom-0.1); applyTransform(); };
+document.getElementById('zoom-reset').onclick = () => { fitToCanvas(); };
+
+const wrap = document.getElementById('canvas-wrap');
+let drag=false, sx, sy, spx, spy;
+wrap.addEventListener('mousedown', e => { if (e.target.closest('[data-id]')) return; drag=true; sx=e.clientX; sy=e.clientY; spx=state.panX; spy=state.panY; wrap.classList.add('grabbing'); });
+window.addEventListener('mousemove', e => { if (!drag) return; state.panX=spx+(e.clientX-sx); state.panY=spy+(e.clientY-sy); applyTransform(); });
+window.addEventListener('mouseup', () => { drag=false; wrap.classList.remove('grabbing'); });
+wrap.addEventListener('wheel', e => { e.preventDefault(); const d=e.deltaY>0?-0.08:0.08; state.zoom=Math.max(0.3,Math.min(2,state.zoom+d)); applyTransform(); }, { passive:false });
+
+function fitToCanvas() {
+  const r = wrap.getBoundingClientRect();
+  state.zoom = Math.min(r.width/1120, r.height/720) * 0.9;
+  state.panX = (r.width  - 1120*state.zoom) / 2;
+  state.panY = 10;
+  applyTransform();
+}
+
+// ── Main update ────────────────────────────────────────────────────────────
+function updateAll() {
+  syncControls();
+  renderDiagram();
+  renderComments();
+  updatePrompt();
+}
+
+initDefs();
+buildControls();
+updateAll();
+setTimeout(fitToCanvas, 60);
+</script>
+</body>
+</html>
