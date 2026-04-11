@@ -29,6 +29,8 @@ export const DAY_IN_MS = 24 * HOUR_IN_MS;
 export const WEEK_IN_MS = 7 * DAY_IN_MS;
 const MONTH_IN_MS = 30 * DAY_IN_MS;
 export const QUATER_IN_MS = 3 * MONTH_IN_MS;
+export const HALF_YEAR_IN_MS = 6 * MONTH_IN_MS;
+export const YEAR_IN_MS = 365 * DAY_IN_MS;
 
 export const STATUS = {
   NOT_UPDATED: 'NOT_UPDATED',
