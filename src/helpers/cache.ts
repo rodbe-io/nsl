@@ -19,7 +19,9 @@ export const rerunCache = (): ReturnType<typeof fsCache<string, ValueToSave, any
   return fsCache<string, ValueToSave, any>({
     cacheName: RERUN_CACHE_NAME,
     cachePath: nslCachePath,
+    // TODO: Make TTL configurable by user
     max: 200,
+    // TODO: Make TTL configurable by user
     ttl: QUATER_IN_MS,
   });
 };
