@@ -40,7 +40,12 @@ export const init = async () => {
     }
     execScript({ answerSelected, cwd, debug, print, rootPkgManager });
   } else {
-    console.log(chalk.white.bold.bgMagenta(`Hey, there is no "last script" to run`));
+    console.log(chalk.white.bold.bgMagenta(`Hey, there is no "last script" to run.`));
+    console.log(
+      chalk.white.bold.bgCyan(
+        `Just run "nsl" and execute any script, and then you will be able to rerun it with "nn" command!`
+      )
+    );
   }
 };
 
