@@ -1,3 +1,10 @@
+## [1.37.0](https://github.com/rodbe-io/nsl/compare/v1.36.0...v1.37.0) (2026-10-13)
+
+### Features
+
+* improve help msg for nn script ([5d691bc](https://github.com/rodbe-io/nsl/commit/5d691bceaeb062144f2e1b896c3111f2ef179500))
+* move deps to devDeps to include it in the compilation ([8bf457f](https://github.com/rodbe-io/nsl/commit/8bf457f48cc3b0d6bc4ad68dc570bc27d652da23))
+
 ## [1.36.0](https://github.com/rodbe-io/nsl/compare/v1.35.0...v1.36.0) (2026-03-22)
 
 ### Features
